@@ -1,0 +1,41 @@
+
+.addIndicators {
+  padding: 1px;
+}
+
+.addIndicators form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--borderPrimary);
+}
+
+.addIndicators form input[type="text"],
+.addIndicators form select {
+  flex: 1;
+  background: var(--backgroundTertiary);
+  color: var(--textSecondary);
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid var(--borderPrimary);
+}
+
+.addIndicators form input[type="submit"] {
+  flex: none;
+  background-color: var(--buttonBackground);
+  color: var(--buttonText);
+  border-radius: 5px;
+  border: 1px solid var(--borderPrimary);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.addIndicators form input[type="submit"]:hover {
+  background-color: var(--buttonHoverBackground);
+  color: var(--buttonHoverText);
+}

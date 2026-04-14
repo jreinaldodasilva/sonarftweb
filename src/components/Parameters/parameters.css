@@ -1,0 +1,48 @@
+/* Styling for the SetAndDisplayParameters component */
+
+.setAndDisplayParameters {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  
+  .parameters-checkbox-group {
+    width:-moz-fit-content;
+    width:fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+ 
+  .checkbox-group {
+    width:-moz-fit-content;
+    width:fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .checkbox-group label {
+    width:-moz-fit-content;
+    width:fit-content;    
+    display: flex;
+    flex-wrap: wrap;    
+    background: var(--backgroundTertiary);
+    color: var(--textSecondary);
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 2px;
+  }
+  
+  /* Style for the parameters list */
+  
+  .parametersList {
+    width: 100%;
+    background: var(--backgroundTertiary);
+    color: var(--textSecondary);
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+    padding: 10px;
+  }
+  

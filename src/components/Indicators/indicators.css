@@ -1,0 +1,53 @@
+/* Styling for the SetAndDisplayIndicators component */
+.setAndDisplayIndicators {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+  }
+  
+  .indicators-checkbox-group {
+    display: flex;
+  }
+
+  .checkbox-group {
+    width:-moz-fit-content;
+    width:fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+  }
+  
+  .checkbox-group h3 {
+    flex-basis: 100%;
+  }
+  
+  .label {
+    width: 100%;
+    background: var(--backgroundTertiary);
+    color: var(--textSecondary);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+    display: flex;
+    align-items: center;
+  }
+  
+  .checkbox-group input[type="checkbox"] {
+    margin-right: 2px;
+  }
+  
+  /* Style for the indicators list */
+  
+  .indicatorsList {
+    width: 100%;
+    background: var(--backgroundTertiary);
+    color: var(--textSecondary);
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+    padding: 10px;
+  }
+  

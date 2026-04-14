@@ -1,0 +1,65 @@
+.bots-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.bots {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.console {
+    height: 300px; /* Adjust the height as per your requirement */
+    width: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: Black;
+    color: White;
+    padding: 10px;
+    white-space: pre-wrap;
+    font-family: monospace;
+    border-style: inset;
+    border: 2px solid var(--borderPrimary);
+}
+
+.tables-container {
+    width: 100%;
+    max-height: 200px; /* Define max height for the container */
+    overflow-y: auto;
+}
+
+.history {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px;
+}
+
+.tradehistory-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+}
+
+.tradehistory-table td {
+    font-weight: normal;
+    border: 1px solid var(--borderPrimary);
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+}
+
+.tradehistory-table th {
+    font-weight: normal;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 2px;
+    padding-right: 2px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--borderPrimary);
+}
