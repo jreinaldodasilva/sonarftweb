@@ -2,28 +2,6 @@ import { HTTP } from "./constants.js";
 import parameterOptions from "./parameterOptions.json";
 import indicatorOptions from "./indicatorOptions.json";
 
-export const getBotId = async (clientId) => {
-    try {
-        const response = await fetch(HTTP + `/botid/${clientId}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-        })
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data.botid;
-    } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
-        throw e;
-    }
-};
-
 export const getBotIds = async (clientId) => {
     const response = await fetch(HTTP + `/botids/${clientId}`, {
         method: "GET",

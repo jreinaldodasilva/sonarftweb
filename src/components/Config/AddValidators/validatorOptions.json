@@ -1,7 +1,0 @@
-
-  {
-    "validator": ["Liquidity", "Order Book Depth", "Slippage", "Spread", "etc..."],
-    "period": ["5 min", "15 min", "30 min", "45 min", "1 h"]
-  }
-
-  
