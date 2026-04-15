@@ -30,8 +30,8 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| S1 | Add `Authorization: Bearer` header to all sonarft API calls | ⬜ | |
-| S2 | Pass auth token on WebSocket connect URL | ⬜ | |
+| S1 | Add `Authorization: Bearer` header to all sonarft API calls | ✅ | Added `getAuthToken()` and `getAuthHeaders()` helpers to `api.js`; all 9 fetch calls now include `Authorization: Bearer {jwt}`; `baseHeaders` constant eliminates header duplication |
+| S2 | Pass auth token on WebSocket connect URL | ✅ | `Bots.js` appends `?token={jwt}` to WS URL when token is available; falls back to unauthenticated URL gracefully |
 | S3 | Add Content Security Policy meta tag | ⬜ | |
 | S4 | Add `.env.production` with HTTPS/WSS URLs | ⬜ | |
 

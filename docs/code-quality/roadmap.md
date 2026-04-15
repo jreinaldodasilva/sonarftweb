@@ -52,8 +52,8 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 | Task | Description | Effort | Priority | Acceptance Criteria |
 |---|---|---|---|---|
-| S1 — Backend auth | Retrieve Netlify JWT via `netlifyIdentity.currentUser().token.access_token`; add `Authorization: Bearer` header to all `fetch` calls in `api.js`; pass token as query param on WebSocket URL | 1 day | Critical | All sonarft API calls include auth header; WS URL includes token; sonarft backend validates JWT |
-| S2 — WS auth | Pass token as `?token=` query param on WebSocket connect URL | 2 hours | High | `useWebSocket` accepts optional token param; URL constructed with token |
+| S1 — Backend auth | Retrieve Netlify JWT via `netlifyIdentity.currentUser().token.access_token`; add `Authorization: Bearer` header to all `fetch` calls in `api.js`; pass token as query param on WebSocket URL | 1 day | Critical | All sonarft API calls include auth header; WS URL includes token; sonarft backend validates JWT | **Completed** — Added `getAuthToken()` (exported for WS use) and `getAuthHeaders()` helpers. All 9 fetch calls use `{ ...baseHeaders, ...getAuthHeaders() }`. `baseHeaders` constant eliminates per-call header duplication. |
+| S2 — WS auth | Pass token as `?token=` query param on WebSocket connect URL | 2 hours | High | `useWebSocket` accepts optional token param; URL constructed with token | **Completed** — `Bots.js` calls `getAuthToken()` and appends `?token={encodeURIComponent(token)}` to the WS URL. Falls back to unauthenticated URL if no token (e.g. during testing). |
 | S3 — CSP header | Add `<meta http-equiv="Content-Security-Policy">` to `public/index.html` | 2 hours | High | CSP blocks inline scripts; allows sonarft API and CoinGecko origins |
 | S4 — HTTPS env | Ensure `REACT_APP_API_URL` uses `https://` and `REACT_APP_WS_URL` uses `wss://` in production `.env` | 1 hour | High | Production build connects over TLS |
 

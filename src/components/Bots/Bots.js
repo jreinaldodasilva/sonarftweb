@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import useWebSocket from "../../hooks/useWebSocket";
-import { getBotIds } from "../../utils/api";
+import { getBotIds, getAuthToken } from "../../utils/api";
 import {
     WS,
     BOT_CREATED_MESSAGE,
@@ -18,6 +18,11 @@ const BotState = Object.freeze({
 
 const Bots = ({ user }) => {
     const clientId = user.id;
+    const token = getAuthToken();
+    const wsUrl = token
+        ? `${WS}/${clientId}?token=${encodeURIComponent(token)}`
+        : `${WS}/${clientId}`;
+
     const [logs, setLogs] = useState("");
     const [botIds, setBotIds] = useState([]);
     const [botState, setBotState] = useState(BotState.REMOVED);
@@ -27,7 +32,7 @@ const Bots = ({ user }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const consoleEndRef = useRef(null);
-    const { socket, wsOpen } = useWebSocket(`${WS}/${clientId}`);
+    const { socket, wsOpen } = useWebSocket(wsUrl);
 
     useEffect(() => {
         const fetchBotIds = async () => {
