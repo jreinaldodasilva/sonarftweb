@@ -9,9 +9,8 @@ export const getBotIds = async (clientId) => {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-    })
+    });
     const data = await response.json();
-    console.log("Botids:", data);
     return data.botids;
 };
 
@@ -22,12 +21,9 @@ export const getOrders = async (botId) => {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-    })
+    });
     if (!response.ok) return null;
-
-    const orderdata = await response.json();
-    console.log("Order data:", orderdata);
-    return orderdata;
+    return await response.json();
 };
 
 export const getTrades = async (botId) => {
@@ -37,15 +33,12 @@ export const getTrades = async (botId) => {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-    })
+    });
     if (!response.ok) return null;
-
-    const tradedata = await response.json();
-    console.log("Trade data:", tradedata);
-    return tradedata;
+    return await response.json();
 };
 
-//Parameters
+// Parameters
 export const getDefaultParameters = async () => {
     try {
         const response = await fetch(HTTP + `/default_parameters`, {
@@ -54,18 +47,13 @@ export const getDefaultParameters = async () => {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-        })
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        return data;
-    } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
-        console.log("Falling back to local JSON.");
-        return parameterOptions; // Return local JSON if fetch fails
+        return await response.json();
+    } catch {
+        return parameterOptions;
     }
 };
 
@@ -77,17 +65,13 @@ export const getParameters = async (clientId) => {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-        })        
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
-        throw e; // You could also return null or some default values
+        throw e;
     }
 };
 
@@ -106,14 +90,11 @@ export const updateParameters = async (clientId, newParameters) => {
         }
         return await response.json();
     } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
         throw e;
     }
 };
 
-//Indicators
+// Indicators
 export const getDefaultIndicators = async () => {
     try {
         const response = await fetch(HTTP + `/default_indicators`, {
@@ -122,18 +103,13 @@ export const getDefaultIndicators = async () => {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-        })        
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        return data;
-    } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
-        console.log("Falling back to local JSON.");
-        return indicatorOptions; // Return local JSON if fetch fails
+        return await response.json();
+    } catch {
+        return indicatorOptions;
     }
 };
 
@@ -145,17 +121,13 @@ export const getIndicators = async (clientId) => {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-        })         
+        });
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
-        return data;
+        return await response.json();
     } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
-        throw e; // You could also return null or some default values
+        throw e;
     }
 };
 
@@ -174,9 +146,6 @@ export const updateIndicators = async (clientId, newIndicators) => {
         }
         return await response.json();
     } catch (e) {
-        console.log(
-            "There was a problem with your fetch operation: " + e.message
-        );
         throw e;
     }
 };

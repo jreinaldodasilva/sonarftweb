@@ -26,8 +26,8 @@ class Parameters extends Component {
                 });
                 return; 
             }
-        } catch (e) {
-            console.log("Failed to fetch updated parameters from server: " + e.message);
+        } catch {
+            // Server unavailable — fall through to localStorage
         }
     
         try {
@@ -38,21 +38,21 @@ class Parameters extends Component {
                     exchanges: localStorageParameters.exchanges,
                     symbols: localStorageParameters.symbols,
                 });
-                return; // If successful, we don't want to overwrite them with defaults
+                return;
             }
-        } catch (e) {
-            console.log("Failed to fetch updated parameters from local storage: " + e.message);
+        } catch {
+            // localStorage unavailable — fall through to defaults
         }
     
         try {
-            // Fall back to default parameters if no updated ones are found
+            // Fall back to default parameters
             const defaultParameters = await getDefaultParameters();
             this.setState({
                 exchanges: defaultParameters.exchanges,
                 symbols: defaultParameters.symbols,
             });
-        } catch (e) {
-            console.log("Failed to fetch default parameters: " + e.message);
+        } catch {
+            // All sources failed — state remains as initialised
         }
     }
 
@@ -83,11 +83,8 @@ class Parameters extends Component {
         const { clientId } = this.props;
         try {
             await updateParameters(clientId, this.state);
-            console.log("Successfully updated parameters on the server.");
-        } catch (e) {
-            console.log(
-                "Failed to update parameters on the server: " + e.message
-            );
+        } catch {
+            // Error surfaced to user via saveStatus in U1
         }
     };
 

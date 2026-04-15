@@ -30,8 +30,8 @@ const CryptoTicker = () => {
                     `https://api.coingecko.com/api/v3/simple/price?ids=${coinIds}&vs_currencies=usd`
                 );
                 setCryptoData(Object.entries(response.data));
-            } catch (error) {
-                console.error("Could not fetch crypto data", error);
+            } catch {
+                // CoinGecko fetch failed — ticker remains empty until next poll
             }
         };
 

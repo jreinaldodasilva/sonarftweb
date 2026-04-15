@@ -28,8 +28,8 @@ class Indicators extends Component {
                 });
                 return; 
             }
-        } catch (e) {
-            console.log("Failed to fetch updated indicators from server: " + e.message);
+        } catch {
+            // Server unavailable — fall through to localStorage
         }
 
         try {
@@ -39,24 +39,24 @@ class Indicators extends Component {
                 this.setState({
                     periods: localStorageIndicators.periods,
                     oscillators: localStorageIndicators.oscillators,
-                    movingaverages: localStorageIndicators.movingaverages,                    
+                    movingaverages: localStorageIndicators.movingaverages,
                 });
-                return; 
+                return;
             }
-        } catch (e) {
-            console.log("Failed to fetch updated indicators from local storage: " + e.message);
+        } catch {
+            // localStorage unavailable — fall through to defaults
         }
 
         try {
-            // Fall back to default indicators if no updated ones are found            
+            // Fall back to default indicators
             const defaultIndicators = await getDefaultIndicators();
             this.setState({
                 periods: defaultIndicators.periods,
                 oscillators: defaultIndicators.oscillators,
                 movingaverages: defaultIndicators.movingaverages,
             });
-        } catch (e) {
-            console.log("Failed to fetch default indicators: " + e.message);
+        } catch {
+            // All sources failed — state remains as initialised
         }
     }
 
@@ -87,11 +87,8 @@ class Indicators extends Component {
         const { clientId } = this.props;
         try {
             await updateIndicators(clientId, this.state);
-            console.log("Successfully updated indicators on the server.");
-        } catch (e) {
-            console.log(
-                "Failed to update indicators on the server: " + e.message
-            );
+        } catch {
+            // Error surfaced to user via saveStatus in U1
         }
     };
 
