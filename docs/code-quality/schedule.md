@@ -18,7 +18,7 @@
 | Q7 | Remove `socket.io-client` from `package.json` | ✅ | Removed `socket.io-client` and `uuid` (only used in orphaned `Config.js`) |
 | Q8 | Remove CDN `<script>` from `public/index.html` | ✅ | Removed render-blocking Netlify Identity CDN script; npm package already bundled |
 | Q9 | Set `GENERATE_SOURCEMAP=false` in build script | ✅ | Added to `build` script in `package.json`; source code no longer exposed in production |
-| Q10 | Move URLs to environment variables | ⬜ | |
+| Q10 | Move URLs to environment variables | ✅ | `constants.js` now reads `REACT_APP_API_URL` / `REACT_APP_WS_URL` with localhost fallbacks; `.env.development.example` and `.env.production.example` committed as templates; actual `.env.*` files gitignored |
 | Q11 | Delete 13 dead files/symbols | ⬜ | |
 | Q12 | Remove all 38 `console.log` statements | ⬜ | |
 | Q13 | Fix `key={index}` → stable keys in `Bots.js` | ⬜ | |

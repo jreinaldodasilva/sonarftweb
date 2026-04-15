@@ -22,7 +22,7 @@ These require no architectural changes — pure configuration, cleanup, and depe
 | Q7 | Remove `socket.io-client` from `package.json` | Unused; ~14 KB + its own CVEs | 15 min | `package.json` | **Completed** — Removed `socket.io-client` and `uuid` (only used in orphaned `Config.js`). Both removed from `package.json` and `package-lock.json`. |
 | Q8 | Remove CDN `<script>` from `public/index.html` | Widget loaded twice; CDN script has no SRI | 15 min | `public/index.html` | **Completed** — Removed render-blocking Netlify Identity CDN script. Widget is already bundled via npm package. |
 | Q9 | Set `GENERATE_SOURCEMAP=false` in build script | Source code exposed in production DevTools | 5 min | `package.json` | **Completed** — `build` script now runs `GENERATE_SOURCEMAP=false react-scripts build`. |
-| Q10 | Move URLs to env vars | Hardcoded `localhost` breaks any deployment | 1 hour | `constants.js`, `.env` |
+| Q10 | Move URLs to env vars | Hardcoded `localhost` breaks any deployment | 1 hour | `constants.js`, `.env` | **Completed** — `constants.js` reads `REACT_APP_API_URL` / `REACT_APP_WS_URL` with localhost fallbacks. `.env.development.example` and `.env.production.example` committed as templates. Actual `.env.*` files added to `.gitignore`. |
 | Q11 | Delete 13 dead files/symbols | Reduces confusion; removes dead CVE surface | 30 min | See list below |
 | Q12 | Remove all 38 `console.log` statements | Sensitive data in production logs | 1 hour | `api.js`, hooks, components |
 | Q13 | Fix `key={index}` → stable keys in `Bots.js` | Incorrect reconciliation on list updates | 30 min | `Bots.js` |

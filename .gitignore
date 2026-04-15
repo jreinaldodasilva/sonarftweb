@@ -18,6 +18,10 @@
 .env.test.local
 .env.production.local
 
+# Environment files with real URLs — use .env.*.example as templates
+.env.development
+.env.production
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
