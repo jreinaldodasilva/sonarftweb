@@ -13,7 +13,7 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 | # | Task | Why | Effort | File(s) |
 |---|---|---|---|---|
-| Q1 | Add `npm test` step to `cloudbuild.yaml` | Broken code currently ships undetected | 30 min | `cloudbuild.yaml` |
+| Q1 | Add `npm test` step to `cloudbuild.yaml` | Broken code currently ships undetected | 30 min | `cloudbuild.yaml` | **Completed** — Added `npm ci`, `npm audit --audit-level=high`, and `CI=true npm test -- --watchAll=false` steps before Docker build. Audit step fails on high/critical CVEs. |
 | Q2 | Fix `App.test.js` smoke test | `npm test` fails immediately | 30 min | `src/App.test.js` |
 | Q3 | Mock `netlify-identity-widget` in `setupTests.js` | Required for any test rendering `App` | 30 min | `src/setupTests.js` |
 | Q4 | Upgrade `axios` to latest | 7 CVEs including CSRF and SSRF | 30 min | `package.json` |
