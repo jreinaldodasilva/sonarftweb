@@ -10,8 +10,8 @@
 | # | Task | Status | Notes |
 |---|---|---|---|
 | Q1 | Add `npm test` step to `cloudbuild.yaml` | ✅ | Added `npm ci`, `npm audit --audit-level=high`, and `CI=true npm test` steps before Docker build |
-| Q2 | Fix `App.test.js` smoke test | ⬜ | |
-| Q3 | Mock `netlify-identity-widget` in `setupTests.js` | ⬜ | |
+| Q2 | Fix `App.test.js` smoke test | ✅ | Replaced broken CRA scaffold with 4 smoke tests: renders, logo, sign-in button, nav link |
+| Q3 | Mock `netlify-identity-widget` in `setupTests.js` | ✅ | Added global mock in `setupTests.js`; all 6 widget methods mocked |
 | Q4 | Upgrade `axios` to latest | ⬜ | |
 | Q5 | Upgrade `react-router-dom` to latest | ⬜ | |
 | Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | ⬜ | |

@@ -14,8 +14,8 @@ These require no architectural changes — pure configuration, cleanup, and depe
 | # | Task | Why | Effort | File(s) |
 |---|---|---|---|---|
 | Q1 | Add `npm test` step to `cloudbuild.yaml` | Broken code currently ships undetected | 30 min | `cloudbuild.yaml` | **Completed** — Added `npm ci`, `npm audit --audit-level=high`, and `CI=true npm test -- --watchAll=false` steps before Docker build. Audit step fails on high/critical CVEs. |
-| Q2 | Fix `App.test.js` smoke test | `npm test` fails immediately | 30 min | `src/App.test.js` |
-| Q3 | Mock `netlify-identity-widget` in `setupTests.js` | Required for any test rendering `App` | 30 min | `src/setupTests.js` |
+| Q2 | Fix `App.test.js` smoke test | `npm test` fails immediately | 30 min | `src/App.test.js` | **Completed** — Replaced broken CRA scaffold test with 4 smoke tests: renders without crash, logo present, Sign In button visible, Crypto nav link present. |
+| Q3 | Mock `netlify-identity-widget` in `setupTests.js` | Required for any test rendering `App` | 30 min | `src/setupTests.js` | **Completed** — Added `jest.mock('netlify-identity-widget', ...)` with all 6 widget methods mocked globally. |
 | Q4 | Upgrade `axios` to latest | 7 CVEs including CSRF and SSRF | 30 min | `package.json` |
 | Q5 | Upgrade `react-router-dom` to latest | XSS via open redirect CVE | 30 min | `package.json` |
 | Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | EOL since April 2023 — no security patches | 15 min | `Dockerfile` |
