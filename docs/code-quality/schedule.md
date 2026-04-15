@@ -14,10 +14,10 @@
 | Q3 | Mock `netlify-identity-widget` in `setupTests.js` | ✅ | Added global mock in `setupTests.js`; all 6 widget methods mocked |
 | Q4 | Upgrade `axios` to latest | ✅ | v1.4.0 → v1.15.0 (fixes 7 CVEs: CSRF, SSRF, DoS, prototype pollution) |
 | Q5 | Upgrade `react-router-dom` to latest | ✅ | v6.15.0 → v6.30.3 latest v6.x (fixes XSS via open redirect CVE; stayed on v6 to avoid v7 breaking changes) |
-| Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | ⬜ | |
-| Q7 | Remove `socket.io-client` from `package.json` | ⬜ | |
-| Q8 | Remove CDN `<script>` from `public/index.html` | ⬜ | |
-| Q9 | Set `GENERATE_SOURCEMAP=false` in build script | ⬜ | |
+| Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | ✅ | `node:14` → `node:20-alpine`; also switched `npm install` → `npm ci` for reproducible builds |
+| Q7 | Remove `socket.io-client` from `package.json` | ✅ | Removed `socket.io-client` and `uuid` (only used in orphaned `Config.js`) |
+| Q8 | Remove CDN `<script>` from `public/index.html` | ✅ | Removed render-blocking Netlify Identity CDN script; npm package already bundled |
+| Q9 | Set `GENERATE_SOURCEMAP=false` in build script | ✅ | Added to `build` script in `package.json`; source code no longer exposed in production |
 | Q10 | Move URLs to environment variables | ⬜ | |
 | Q11 | Delete 13 dead files/symbols | ⬜ | |
 | Q12 | Remove all 38 `console.log` statements | ⬜ | |

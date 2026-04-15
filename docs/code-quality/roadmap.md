@@ -18,10 +18,10 @@ These require no architectural changes — pure configuration, cleanup, and depe
 | Q3 | Mock `netlify-identity-widget` in `setupTests.js` | Required for any test rendering `App` | 30 min | `src/setupTests.js` | **Completed** — Added `jest.mock('netlify-identity-widget', ...)` with all 6 widget methods mocked globally. |
 | Q4 | Upgrade `axios` to latest | 7 CVEs including CSRF and SSRF | 30 min | `package.json` | **Completed** — v1.4.0 → v1.15.0. Fixes CSRF (GHSA-wf5p-g6vw-rhxx), SSRF (GHSA-8hc4-vh64-cxmj), credential leakage, DoS, and prototype pollution CVEs. |
 | Q5 | Upgrade `react-router-dom` to latest | XSS via open redirect CVE | 30 min | `package.json` | **Completed** — v6.15.0 → v6.30.3 (latest v6.x). Stayed on v6 to avoid v7 breaking changes. Fixes XSS via open redirect (GHSA-2w69-qvjg-hvjx). |
-| Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | EOL since April 2023 — no security patches | 15 min | `Dockerfile` |
-| Q7 | Remove `socket.io-client` from `package.json` | Unused; ~14 KB + its own CVEs | 15 min | `package.json` |
-| Q8 | Remove CDN `<script>` from `public/index.html` | Widget loaded twice; CDN script has no SRI | 15 min | `public/index.html` |
-| Q9 | Set `GENERATE_SOURCEMAP=false` in build script | Source code exposed in production DevTools | 5 min | `package.json` |
+| Q6 | Upgrade Node.js in `Dockerfile` from 14 to 20 | EOL since April 2023 — no security patches | 15 min | `Dockerfile` | **Completed** — `node:14` → `node:20-alpine`. Also switched `npm install` → `npm ci` for reproducible CI builds. |
+| Q7 | Remove `socket.io-client` from `package.json` | Unused; ~14 KB + its own CVEs | 15 min | `package.json` | **Completed** — Removed `socket.io-client` and `uuid` (only used in orphaned `Config.js`). Both removed from `package.json` and `package-lock.json`. |
+| Q8 | Remove CDN `<script>` from `public/index.html` | Widget loaded twice; CDN script has no SRI | 15 min | `public/index.html` | **Completed** — Removed render-blocking Netlify Identity CDN script. Widget is already bundled via npm package. |
+| Q9 | Set `GENERATE_SOURCEMAP=false` in build script | Source code exposed in production DevTools | 5 min | `package.json` | **Completed** — `build` script now runs `GENERATE_SOURCEMAP=false react-scripts build`. |
 | Q10 | Move URLs to env vars | Hardcoded `localhost` breaks any deployment | 1 hour | `constants.js`, `.env` |
 | Q11 | Delete 13 dead files/symbols | Reduces confusion; removes dead CVE surface | 30 min | See list below |
 | Q12 | Remove all 38 `console.log` statements | Sensitive data in production logs | 1 hour | `api.js`, hooks, components |
