@@ -99,8 +99,6 @@ const Bots = ({ user }) => {
         }
     };
 
-    //console.log("Rendering with:", { orders, trades, botIds });
-
     return (
         <div className="bots-container">
             {isLoading && <div>Loading...</div>}
@@ -123,8 +121,8 @@ const Bots = ({ user }) => {
                             value={selectedBotId}
                         >
                             {Array.isArray(botIds) &&
-                                botIds.map((botId, index) => (
-                                    <option key={index} value={botId}>
+                                botIds.map((botId) => (
+                                    <option key={botId} value={botId}>
                                         {botId}
                                     </option>
                                 ))}
@@ -180,7 +178,7 @@ const Bots = ({ user }) => {
                             <tbody>
                                 {Array.isArray(orders) &&
                                     orders.map((order, index) => (
-                                        <tr key={index}>
+                                        <tr key={`${order.timestamp}-${order.buy_exchange}-${index}`}>
                                             <td>{index}</td>
                                             <td>{order.timestamp}</td>
                                             <td>{order.position}</td>
@@ -227,7 +225,7 @@ const Bots = ({ user }) => {
                             <tbody>
                                 {Array.isArray(trades) &&
                                     trades.map((trade, index) => (
-                                        <tr key={index}>
+                                        <tr key={`${trade.timestamp}-${trade.buy_exchange}-${index}`}>
                                             <td>{index}</td>
                                             <td>{trade.timestamp}</td>
                                             <td>{trade.position}</td>

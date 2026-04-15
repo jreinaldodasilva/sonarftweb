@@ -1,91 +1,16 @@
 :root {
   --backgroundPrimary: #000814;
-  --backgroundSecondary: #0c2a4e;  /* New color */
+  --backgroundSecondary: #0c2a4e;
   --backgroundTertiary: #e0e0e0;
   --textPrimary: #dae1e7;
-  --textSecondary: #142850;  /* New color */
-  --textTerciary: #9AA5B1;
-  --borderPrimary: #528afc;   /* New color */
-  --borderSecondary: #528afc;   /* New color */
-  --buttonHoverBackground: #6897fc;  /* New color */
-  --buttonHoverText: #142850;
-  --buttonBackground: #75a0fc;  /* New color */
-  --buttonText: #000814;
-  --headerSpan: #548cfe;  /* New color */
-  --footerSpan: #548cfe;  /* New color */
-}
-
-:root_ {
-  --backgroundPrimary: #000814;
-  --backgroundSecondary: #142850;
-  --backgroundTertiary: #0c2a4e;  /* New color */
-  --textPrimary: #528afc;  /* New color */
   --textSecondary: #142850;
-  --textTerciary: #9AA5B1;
-  --borderPrimary: #22457a;  /* New color */
-  --buttonHoverBackground: #6897fc;  /* New color */
-  --buttonHoverText: #ffffff;  /* New color */
-  --buttonBackground: #CED9DA;
-  --buttonText: #000000;  /* New color */
-  --headerSpan: #FDC500;
-}
-
-:root_ {
-  --backgroundPrimary: #000000;  /* New color */
-  --backgroundSecondary: #142850;
-  --backgroundTertiary: #e0e0e0;
-  --textPrimary: #ffffff;  /* New color */
-  --textSecondary: #22457a;  /* New color */
-  --textTerciary: #75a0fc;  /* New color */
-  --borderPrimary: #CED9DA;
-  --buttonHoverBackground: #B9CED0;
-  --buttonHoverText: #0c2a4e;  /* New color */
-  --buttonBackground: #548cfe;  /* New color */
+  --textTertiary: #9AA5B1;
+  --borderPrimary: #528afc;
+  --borderSecondary: #528afc;
+  --buttonHoverBackground: #6897fc;
+  --buttonHoverText: #142850;
+  --buttonBackground: #75a0fc;
   --buttonText: #000814;
-  --headerSpan: #6897fc;  /* New color */
-}
-
-:root_ {
-  --backgroundPrimary: #000814;
-  --backgroundSecondary: #142850; /* Darker blue */
-  --backgroundTertiary: #e0e0e0; /* Even darker blue */
-  --textPrimary: #dae1e7; /* Light grey-blue */
-  --textSecondary: #142850; /* White for better contrast */
-  --textTerciary: #9AA5B1; /* Light grey for less important text */
-  --borderPrimary: #CED9DA; /* Light grey, same as tertiary text */
-  --buttonHoverBackground: #B9CED0  ; /* Teal blue */
-  --buttonHoverText: #142850; /* White for contrast */
-  --buttonBackground: #CED9DA;
-  --buttonText: #000814;
-  --headerSpan: #FDC500; /* Bright yellow for highlights */
-}
-
-:root__ {
-  --backgroundPrimary: #000814;
-  --backgroundSecondary: #e0e0e0;
-  --backgroundTertiary: #e0e0e0;
-  --textPrimary: #E0E1ED;
-  --textSecondary: #001D3D;
-  --textTerciary: #e0e0e0;
-  --borderPrimary: #ccdbdc;
-  --buttonBackground: #e0e0e0;
-  --buttonText: #001D3D;
-  --buttonHoverBackground: #CED9DA;
-  --buttonHoverText: #000814;
-  --headerSpan: #FDC500;
-}
-  
-:root_ {
-  --backgroundPrimary: #000814; /* White */
-  --backgroundSecondary: #f2f2f2; /* Light gray */
-  --backgroundTertiary: #e0e0e0; /* Even lighter gray */
-  --textPrimary: #142850; /* Dark blue */
-  --textSecondary: #27496d; /* Even darker blue */
-  --textTerciary: #000814; /* Very dark blue, almost black */
-  --borderPrimary: #9AA5B1; /* Light grey */
-  --buttonBackground: #0c7b93; /* Teal blue */
-  --buttonText: #ffffff; /* White for contrast */
-  --buttonHoverBackground: #00a8cc; /* Brighter teal blue */
-  --buttonHoverText: #ffffff; /* White for contrast */
-  --headerSpan: #FDC500; /* Bright yellow for highlights */
+  --headerSpan: #548cfe;
+  --footerSpan: #548cfe;
 }

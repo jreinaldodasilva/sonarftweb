@@ -21,8 +21,8 @@
 | Q10 | Move URLs to environment variables | ✅ | `constants.js` now reads `REACT_APP_API_URL` / `REACT_APP_WS_URL` with localhost fallbacks; `.env.development.example` and `.env.production.example` committed as templates; actual `.env.*` files gitignored |
 | Q11 | Delete 13 dead files/symbols | ✅ | Removed `App_Trading.js`, `NavBar_Trading.js`, entire `Config/` dir (17 files), `ParametersProvider.js`, `WebSocketContext.js`, `sonarft_bg.jpg`, `public/sonarftlogo.png`, `public/defaultParameters.json`, `public/defaultIndicators.json`; removed `getBotId` from `api.js` |
 | Q12 | Remove all 38 `console.log` statements | ✅ | Removed from `api.js`, `useWebSocket.jsx` (+ dropped debug readyState `useEffect`), `Parameters.js`, `Indicators.js`, `CryptoTicker.js`, `CChatGPT.js`; 0 `console.*` calls remain in `src/` |
-| Q13 | Fix `key={index}` → stable keys in `Bots.js` | ⬜ | |
-| Q14 | Fix `Terciary` typo in CSS | ⬜ | |
+| Q13 | Fix `key={index}` → stable keys in `Bots.js` | ✅ | Bot selector uses `key={botId}`; order/trade rows use `key={timestamp-exchange-index}`; removed commented-out debug log |
+| Q14 | Fix `Terciary` typo in CSS | ✅ | Renamed `--textTerciary` → `--textTertiary` and `--backgroundTerciary` → `--backgroundTertiary` across 5 CSS files; also removed 5 dead `:root_`/`:root__` theme variant blocks from `variables.css` |
 
 ---
 

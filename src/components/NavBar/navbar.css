@@ -59,12 +59,12 @@ nav img {
 }
 
 .sectionLinks h1:hover {
-  color: var(--textTerciary);
+  color: var(--textTertiary);
   transition: all 0.3s ease;
 }   
 
 .sectionLinks h2:hover {
-  color: var(--textTerciary);
+  color: var(--textTertiary);
   transition: all 0.3s ease;
 }   
 
