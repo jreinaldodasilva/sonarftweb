@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./indicators.css";
 import { getDefaultIndicators, getIndicators, updateIndicators } from "../../utils/api";
 
+// saveStatus: null | 'saving' | 'saved' | 'error'
+const SAVE_FEEDBACK_MS = 3000;
+
 class Indicators extends Component {
     constructor() {
         super();
@@ -12,28 +15,27 @@ class Indicators extends Component {
                   periods: {},
                   oscillators: {},
                   movingaverages: {},
+                  saveStatus: null,
               };
     }
 
     async componentDidMount() {
         try {
-            // Check for updated indicators from server
             const { clientId } = this.props;
             const updatedIndicators = await getIndicators(clientId);
             if (updatedIndicators) {
                 this.setState({
                     periods: updatedIndicators.periods,
                     oscillators: updatedIndicators.oscillators,
-                    movingaverages: updatedIndicators.movingaverages,                    
+                    movingaverages: updatedIndicators.movingaverages,
                 });
-                return; 
+                return;
             }
         } catch {
             // Server unavailable — fall through to localStorage
         }
 
         try {
-            // Check for updated indicators from local storage
             const localStorageIndicators = JSON.parse(localStorage.getItem("indicatorsState"));
             if (localStorageIndicators) {
                 this.setState({
@@ -48,7 +50,6 @@ class Indicators extends Component {
         }
 
         try {
-            // Fall back to default indicators
             const defaultIndicators = await getDefaultIndicators();
             this.setState({
                 periods: defaultIndicators.periods,
@@ -65,38 +66,31 @@ class Indicators extends Component {
         const isChecked = e.target.checked;
 
         this.setState(
-            (prevState) => {
-                const updatedItems = {
-                    ...prevState[category],
-                    [item]: isChecked,
-                };
-                return { [category]: updatedItems };
-            },
+            (prevState) => ({
+                [category]: { ...prevState[category], [item]: isChecked },
+            }),
             () => {
-                // Save to local storage
-                localStorage.setItem(
-                    "indicatorsState",
-                    JSON.stringify(this.state)
-                );
+                localStorage.setItem("indicatorsState", JSON.stringify(this.state));
             }
         );
     };
 
     handleSetClick = async () => {
-        // Send the current state to the server
         const { clientId } = this.props;
+        this.setState({ saveStatus: "saving" });
         try {
             await updateIndicators(clientId, this.state);
+            this.setState({ saveStatus: "saved" });
+            setTimeout(() => this.setState({ saveStatus: null }), SAVE_FEEDBACK_MS);
         } catch {
-            // Error surfaced to user via saveStatus in U1
+            this.setState({ saveStatus: "error" });
+            setTimeout(() => this.setState({ saveStatus: null }), SAVE_FEEDBACK_MS);
         }
     };
 
     renderCheckboxes(category) {
         const options = this.state[category];
-        if (!options) {
-            return <div>Error: Invalid category</div>;
-        }
+        if (!options) return <div>Error: Invalid category</div>;
 
         return Object.keys(options).map((item) => (
             <li key={item}>
@@ -104,7 +98,7 @@ class Indicators extends Component {
                     <input
                         type="checkbox"
                         name={item}
-                        checked={options[item] || false}
+                        checked={options[item] ?? false}
                         onChange={(e) => this.handleCheckboxChange(e, category)}
                     />
                     {item}
@@ -113,27 +107,44 @@ class Indicators extends Component {
         ));
     }
 
+    renderSaveStatus() {
+        const { saveStatus } = this.state;
+        if (!saveStatus) return null;
+        const messages = {
+            saving: "Saving...",
+            saved: "✓ Saved",
+            error: "✗ Error — try again",
+        };
+        return (
+            <span className={`save-status save-status--${saveStatus}`}>
+                {messages[saveStatus]}
+            </span>
+        );
+    }
+
     render() {
+        const { saveStatus } = this.state;
         return (
             <div className="setAndDisplayIndicators">
                 <h2>Indicators</h2>
                 <form>
                     <div className="checkbox-group label">
                         <h3>Periods</h3>
-                        <ul>
-                            {this.renderCheckboxes("periods")}
-                        </ul>
+                        <ul>{this.renderCheckboxes("periods")}</ul>
                         <h3>Oscillators</h3>
-                        <ul>
-                            {this.renderCheckboxes("oscillators")}
-                        </ul>
+                        <ul>{this.renderCheckboxes("oscillators")}</ul>
                         <h3>Moving Averages</h3>
-                        <ul>
-                            {this.renderCheckboxes("movingaverages")}
-                        </ul>
-                        <button type="button" onClick={this.handleSetClick}>
-                            Set bot indicators
-                        </button>                        
+                        <ul>{this.renderCheckboxes("movingaverages")}</ul>
+                        <div className="save-row">
+                            <button
+                                type="button"
+                                onClick={this.handleSetClick}
+                                disabled={saveStatus === "saving"}
+                            >
+                                Set bot indicators
+                            </button>
+                            {this.renderSaveStatus()}
+                        </div>
                     </div>
                 </form>
             </div>

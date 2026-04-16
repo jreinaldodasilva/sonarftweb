@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import "./parameters.css";
 import { getDefaultParameters, getParameters, updateParameters } from "../../utils/api";
 
+// saveStatus: null | 'saving' | 'saved' | 'error'
+const SAVE_FEEDBACK_MS = 3000;
+
 class Parameters extends Component {
     constructor() {
         super();
@@ -11,12 +14,12 @@ class Parameters extends Component {
             : {
                   exchanges: {},
                   symbols: {},
+                  saveStatus: null,
               };
     }
 
     async componentDidMount() {
         try {
-            // Check for updated parameters from server
             const { clientId } = this.props;
             const updatedParameters = await getParameters(clientId);
             if (updatedParameters) {
@@ -24,14 +27,13 @@ class Parameters extends Component {
                     exchanges: updatedParameters.exchanges,
                     symbols: updatedParameters.symbols,
                 });
-                return; 
+                return;
             }
         } catch {
             // Server unavailable — fall through to localStorage
         }
-    
+
         try {
-            // Check for updated parameters from local storage
             const localStorageParameters = JSON.parse(localStorage.getItem("parametersState"));
             if (localStorageParameters) {
                 this.setState({
@@ -43,9 +45,8 @@ class Parameters extends Component {
         } catch {
             // localStorage unavailable — fall through to defaults
         }
-    
+
         try {
-            // Fall back to default parameters
             const defaultParameters = await getDefaultParameters();
             this.setState({
                 exchanges: defaultParameters.exchanges,
@@ -61,38 +62,31 @@ class Parameters extends Component {
         const isChecked = e.target.checked;
 
         this.setState(
-            (prevState) => {
-                const updatedItems = {
-                    ...prevState[category],
-                    [item]: isChecked,
-                };
-                return { [category]: updatedItems };
-            },
+            (prevState) => ({
+                [category]: { ...prevState[category], [item]: isChecked },
+            }),
             () => {
-                // Save to local storage
-                localStorage.setItem(
-                    "parametersState",
-                    JSON.stringify(this.state)
-                );
+                localStorage.setItem("parametersState", JSON.stringify(this.state));
             }
         );
     };
 
     handleSetClick = async () => {
-        // Send the current state to the server
         const { clientId } = this.props;
+        this.setState({ saveStatus: "saving" });
         try {
             await updateParameters(clientId, this.state);
+            this.setState({ saveStatus: "saved" });
+            setTimeout(() => this.setState({ saveStatus: null }), SAVE_FEEDBACK_MS);
         } catch {
-            // Error surfaced to user via saveStatus in U1
+            this.setState({ saveStatus: "error" });
+            setTimeout(() => this.setState({ saveStatus: null }), SAVE_FEEDBACK_MS);
         }
     };
 
     renderCheckboxes(category) {
         const options = this.state[category];
-        if (!options) {
-            return <div>Error: Invalid category</div>;
-        }
+        if (!options) return <div>Error: Invalid category</div>;
 
         return Object.keys(options).map((item) => (
             <li key={item}>
@@ -100,7 +94,7 @@ class Parameters extends Component {
                     <input
                         type="checkbox"
                         name={item}
-                        checked={options[item] || false}
+                        checked={options[item] ?? false}
                         onChange={(e) => this.handleCheckboxChange(e, category)}
                     />
                     {item}
@@ -109,23 +103,42 @@ class Parameters extends Component {
         ));
     }
 
+    renderSaveStatus() {
+        const { saveStatus } = this.state;
+        if (!saveStatus) return null;
+        const messages = {
+            saving: "Saving...",
+            saved: "✓ Saved",
+            error: "✗ Error — try again",
+        };
+        return (
+            <span className={`save-status save-status--${saveStatus}`}>
+                {messages[saveStatus]}
+            </span>
+        );
+    }
+
     render() {
+        const { saveStatus } = this.state;
         return (
             <div className="setAndDisplayParameters">
                 <h2>Parameters</h2>
                 <form>
                     <div className="checkbox-group label">
                         <h3>Exchanges</h3>
-                        <ul>
-                            {this.renderCheckboxes("exchanges")}
-                        </ul>
+                        <ul>{this.renderCheckboxes("exchanges")}</ul>
                         <h3>Symbols</h3>
-                        <ul>
-                            {this.renderCheckboxes("symbols")}
-                        </ul>
-                        <button type="button" onClick={this.handleSetClick}>
-                            Set bot parameters
-                        </button>
+                        <ul>{this.renderCheckboxes("symbols")}</ul>
+                        <div className="save-row">
+                            <button
+                                type="button"
+                                onClick={this.handleSetClick}
+                                disabled={saveStatus === "saving"}
+                            >
+                                Set bot parameters
+                            </button>
+                            {this.renderSaveStatus()}
+                        </div>
                     </div>
                 </form>
             </div>

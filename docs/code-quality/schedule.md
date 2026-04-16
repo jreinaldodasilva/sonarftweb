@@ -52,11 +52,11 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| U1 | Action feedback on Parameters + Indicators save | ⬜ | |
-| U2 | Confirmation dialog before bot removal | ⬜ | |
-| U3 | Fix table overflow (`overflow-x: auto`) | ⬜ | |
-| U4 | Error state in `Bots.js` fetch | ⬜ | |
-| U5 | Add try/catch to `getBotIds`, `getOrders`, `getTrades` | ⬜ | |
+| U1 | Action feedback on Parameters + Indicators save | ✅ | `saveStatus` state: `null`/`saving`/`saved`/`error`; button disabled during save; `✓ Saved` / `✗ Error` badge auto-clears after 3s |
+| U2 | Confirmation dialog before bot removal | ✅ | `window.confirm()` before `handleRemoveButtonClick` fires WS command |
+| U3 | Fix table overflow (`overflow-x: auto`) | ✅ | Completed as part of W3 |
+| U4 | Error state in `Bots.js` fetch | ✅ | `fetchError` state; catch block sets message; error banner rendered below loading indicator |
+| U5 | Add try/catch to `getBotIds`, `getOrders`, `getTrades` | ✅ | `getBotIds` throws on error (caller handles); `getOrders`/`getTrades` return `null` on network failure |
 
 ---
 

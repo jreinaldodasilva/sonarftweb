@@ -70,11 +70,11 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 | Task | Description | Effort | Priority | Acceptance Criteria |
 |---|---|---|---|---|
-| U1 — Action feedback | Add `saveStatus` state to `Parameters` and `Indicators`; show "Saved ✓" or "Error — try again" after POST | 2 hours | High | User sees result of every "Set" button click |
-| U2 — Bot removal confirm | Add `window.confirm()` or a simple modal before `handleRemoveButtonClick` fires | 1 hour | High | User must confirm before bot is removed |
-| U3 — Table overflow fix | Add `overflow-x: auto` to `.tables-container` in `bots.css` | 15 min | High | Tables scroll horizontally on mobile/tablet |
-| U4 — Error states | Add `error` state to `Bots.js` `fetchBotIds`; render error message if fetch fails | 1 hour | High | User sees "Could not load bots" instead of empty UI |
-| U5 — Add try/catch | Add try/catch to `getBotIds`, `getOrders`, `getTrades` in `api.js` | 1 hour | High | No unhandled promise rejections |
+| U1 — Action feedback | Add `saveStatus` state to `Parameters` and `Indicators`; show "Saved ✓" or "Error — try again" after POST | 2 hours | High | User sees result of every "Set" button click | **Completed** — `saveStatus` state (`null`/`saving`/`saved`/`error`) added to both components. Button disabled during save. `✓ Saved` (green) / `✗ Error — try again` (red) badge auto-clears after 3s. `.save-row` and `.save-status--*` CSS added. |
+| U2 — Bot removal confirm | Add `window.confirm()` or a simple modal before `handleRemoveButtonClick` fires | 1 hour | High | User must confirm before bot is removed | **Completed** — `window.confirm()` added to `handleRemoveButtonClick`; returns early if user cancels. |
+| U3 — Table overflow fix | Add `overflow-x: auto` to `.tables-container` in `bots.css` | 15 min | High | Tables scroll horizontally on mobile/tablet | **Completed** — Added as part of W3. |
+| U4 — Error states | Add `error` state to `Bots.js` `fetchBotIds`; render error message if fetch fails | 1 hour | High | User sees "Could not load bots" instead of empty UI | **Completed** — `fetchError` state added; catch block sets message; error banner rendered using existing `.bots-ws-error` CSS class. |
+| U5 — Add try/catch | Add try/catch to `getBotIds`, `getOrders`, `getTrades` in `api.js` | 1 hour | High | No unhandled promise rejections | **Completed** — `getBotIds` wrapped in try/catch and re-throws (caller handles UI); `getOrders`/`getTrades` return `null` on network failure (consistent with existing `!response.ok` behaviour). |
 
 ### Testing Track — Phase 1 (Critical paths)
 

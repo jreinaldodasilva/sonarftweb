@@ -21,30 +21,43 @@ const baseHeaders = {
 };
 
 export const getBotIds = async (clientId) => {
-    const response = await fetch(HTTP + `/botids/${clientId}`, {
-        method: "GET",
-        headers: { ...baseHeaders, ...getAuthHeaders() },
-    });
-    const data = await response.json();
-    return data.botids;
+    try {
+        const response = await fetch(HTTP + `/botids/${clientId}`, {
+            method: "GET",
+            headers: { ...baseHeaders, ...getAuthHeaders() },
+        });
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        return data.botids;
+    } catch (e) {
+        throw e;
+    }
 };
 
 export const getOrders = async (botId) => {
-    const response = await fetch(HTTP + `/bot/${botId}/orders`, {
-        method: "GET",
-        headers: { ...baseHeaders, ...getAuthHeaders() },
-    });
-    if (!response.ok) return null;
-    return await response.json();
+    try {
+        const response = await fetch(HTTP + `/bot/${botId}/orders`, {
+            method: "GET",
+            headers: { ...baseHeaders, ...getAuthHeaders() },
+        });
+        if (!response.ok) return null;
+        return await response.json();
+    } catch {
+        return null;
+    }
 };
 
 export const getTrades = async (botId) => {
-    const response = await fetch(HTTP + `/bot/${botId}/trades`, {
-        method: "GET",
-        headers: { ...baseHeaders, ...getAuthHeaders() },
-    });
-    if (!response.ok) return null;
-    return await response.json();
+    try {
+        const response = await fetch(HTTP + `/bot/${botId}/trades`, {
+            method: "GET",
+            headers: { ...baseHeaders, ...getAuthHeaders() },
+        });
+        if (!response.ok) return null;
+        return await response.json();
+    } catch {
+        return null;
+    }
 };
 
 // Parameters

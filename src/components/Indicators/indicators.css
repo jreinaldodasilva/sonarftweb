@@ -51,3 +51,33 @@
     padding: 10px;
   }
   
+
+.save-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.save-status {
+    font-size: 0.85rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.save-status--saving {
+    color: var(--textSecondary);
+    opacity: 0.7;
+}
+
+.save-status--saved {
+    color: #4a8a4a;
+    background-color: #1a3a1a;
+    border: 1px solid #4a8a4a;
+}
+
+.save-status--error {
+    color: #ffcccc;
+    background-color: #5c1a1a;
+    border: 1px solid #a33;
+}

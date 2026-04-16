@@ -30,6 +30,7 @@ const Bots = ({ user }) => {
     const [orders, setOrders] = useState([]);
     const [selectedBotId, setSelectedBotId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [fetchError, setFetchError] = useState(null);
 
     const consoleEndRef = useRef(null);
     const { socket, wsOpen, wsError } = useWebSocket(wsUrl);
@@ -38,8 +39,11 @@ const Bots = ({ user }) => {
         const fetchBotIds = async () => {
             try {
                 setIsLoading(true);
+                setFetchError(null);
                 const ids = await getBotIds(clientId);
                 setBotIds(ids);
+            } catch {
+                setFetchError("Could not load bots — is the server running?");
             } finally {
                 setIsLoading(false);
             }
@@ -94,6 +98,10 @@ const Bots = ({ user }) => {
 
     const handleRemoveButtonClick = () => {
         if (socket && selectedBotId) {
+            const confirmed = window.confirm(
+                `Remove bot "${selectedBotId}"? This will stop the bot immediately.`
+            );
+            if (!confirmed) return;
             socket.send(
                 JSON.stringify({
                     type: "keypress",
@@ -107,6 +115,7 @@ const Bots = ({ user }) => {
     return (
         <div className="bots-container">
             {isLoading && <div className="bots-loading">Loading...</div>}
+            {fetchError && <div className="bots-ws-error">⚠ {fetchError}</div>}
             {wsError && (
                 <div className="bots-ws-error">
                     ⚠ {wsError} — reconnecting...
