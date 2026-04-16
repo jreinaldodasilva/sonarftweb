@@ -186,7 +186,16 @@ All inline `style={{}}` props removed from source files. Zero inline styles rema
 - `App.js`: `PageLoader` inline styles → `.page-loader` class in `App.css` (also added `App.css` import)
 Move `style={{ textDecoration: "none" }}` to CSS class; move opacity logic to CSS class toggle.
 
-**M15 — Add ESLint rules to CI (0.5 day)**
+**M15 — Add ESLint rules to CI (0.5 day)** — **Completed**
+
+Added three ESLint rules to `eslintConfig` in `package.json`:
+- `no-console: warn` — flags any `console.*` call (all removed in Q12, so zero warnings)
+- `no-unused-vars: warn` — flags unused imports and variables
+- `react/prop-types: warn` — flags missing PropTypes (all added in M13)
+
+Added `lint` script: `eslint src/ --ext .js,.jsx --max-warnings=0` — any warning fails CI.
+
+Added lint step to `cloudbuild.yaml` between `npm ci` and `npm audit`. CI pipeline order: install → lint → audit → test → build → deploy.
 Add `npm run eslint` step to `cloudbuild.yaml`. Add `no-console` rule to ESLint config.
 
 **Month 2 total effort: ~20 days**

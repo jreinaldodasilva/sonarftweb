@@ -89,7 +89,7 @@
 | M12 | Install `jest-axe` + accessibility tests | ⬜ | |
 | M13 | Add PropTypes to all components | ✅ | Added to `Bots`, `Parameters`, `Indicators`, `PrivateRoute`, `ErrorBoundary`; `prop-types` v15.8.1 added to `package.json` |
 | M14 | Remove inline styles | ✅ | `NavBar.js`: 4× `style={{ textDecoration: "none" }}` → `.nav-link` CSS class; `Bots.js`: 2× opacity inline → `.btn-disabled` CSS class; `App.js`: `PageLoader` inline → `.page-loader` CSS class; zero inline styles remain in `src/` |
-| M15 | Add ESLint `no-console` rule + enforce in CI | ⬜ | |
+| M15 | Add ESLint `no-console` rule + enforce in CI | ✅ | Added `no-console: warn`, `no-unused-vars: warn`, `react/prop-types: warn` to `eslintConfig`; added `lint` script with `--max-warnings=0`; lint step added to `cloudbuild.yaml` before audit and tests |
 
 ---
 

@@ -20,6 +20,7 @@
     "start": "react-scripts start",
     "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test",
+    "lint": "eslint src/ --ext .js,.jsx --max-warnings=0",
     "format": "prettier --write \"**/*.{js}\"",
     "eslint": "eslint --fix --ext *.js",
     "eject": "react-scripts eject"
@@ -28,7 +29,12 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ]
+    ],
+    "rules": {
+      "no-console": "warn",
+      "no-unused-vars": "warn",
+      "react/prop-types": "warn"
+    }
   },
   "browserslist": {
     "production": [
