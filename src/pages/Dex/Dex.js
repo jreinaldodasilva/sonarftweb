@@ -1,12 +1,8 @@
 import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../hooks/AuthProvider";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Building from "../../components/Building/Building";
 import "./dex.css";
-
-function PrivateRoute({ children, value }) {
-    return value ? children : <Navigate to="/" />;
-}
 
 const Dex = () => {
     const { user } = useContext(AuthContext);
@@ -17,7 +13,6 @@ const Dex = () => {
                 <PrivateRoute value={user}>
                     <Building />
                 </PrivateRoute>
-                {/* Other components or elements can go here */}
             </main>
         </section>
     );

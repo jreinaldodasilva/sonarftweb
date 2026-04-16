@@ -1,14 +1,10 @@
 import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../hooks/AuthProvider";
+import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 import Bots from "../../components/Bots/Bots";
 import Parameters from "../../components/Parameters/Parameters";
 import Indicators from "../../components/Indicators/Indicators";
 import "./crypto.css";
-
-function PrivateRoute({ children, value }) {
-    return value ? children : <Navigate to="/" />;
-}
 
 const Crypto = () => {
     const { user } = useContext(AuthContext);

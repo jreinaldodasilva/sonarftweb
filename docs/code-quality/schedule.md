@@ -75,7 +75,7 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| M1 | Extract shared `PrivateRoute` component | ⬜ | |
+| M1 | Extract shared `PrivateRoute` component | ✅ | `src/components/PrivateRoute/PrivateRoute.js` created; 4 inline definitions removed from `Crypto.js`, `Dex.js`, `Forex.js`, `Token.js`; 3 test cases added |
 | M2 | Refactor `Parameters` + `Indicators` to functional + shared hook | ⬜ | |
 | M3 | Split `Bots.js` into hook + sub-components | ⬜ | |
 | M4 | Add `ErrorBoundary` around `<Crypto>` page | ⬜ | |

@@ -93,7 +93,9 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 ### Component Refactoring
 
-**M1 — Extract `PrivateRoute` (0.5 day)**
+**M1 — Extract `PrivateRoute` (0.5 day)** — **Completed**
+
+`src/components/PrivateRoute/PrivateRoute.js` created as a 5-line functional component. Removed 4 identical inline `function PrivateRoute` definitions from `Crypto.js`, `Dex.js`, `Forex.js`, `Token.js`. All `Navigate` imports removed from page files. Added `PrivateRoute.test.js` with 3 test cases (truthy value renders children, null redirects, undefined redirects).
 ```
 src/components/PrivateRoute/PrivateRoute.js
 ```
