@@ -101,7 +101,21 @@ src/components/PrivateRoute/PrivateRoute.js
 ```
 Remove 4 identical inline definitions. Single import everywhere.
 
-**M2 — Refactor `Parameters` + `Indicators` to functional (3 days)**
+**M2 — Refactor `Parameters` + `Indicators` to functional (3 days)** — **Completed**
+
+Created `src/hooks/useConfigCheckboxes.js` (105 lines) encapsulating all shared logic:
+- Synchronous localStorage hydration in `useState` initialiser
+- 3-tier async load in `useEffect`: server → localStorage → bundled defaults
+- `handleCheckboxChange` with `useCallback` — updates state + localStorage atomically
+- `handleSave` with `useCallback` — manages `saveStatus` lifecycle
+
+`Parameters.js` refactored from 140-line class to 74-line functional component.
+`Indicators.js` refactored from 140-line class to 76-line functional component.
+Both now use `useConfigCheckboxes` with their specific API functions and state keys.
+
+No class components remain in the codebase except `ErrorBoundary` (required by React).
+
+Added `useConfigCheckboxes.test.js` with 8 test cases covering all 3 fallback tiers, checkbox interaction, localStorage sync, save success, and save error.
 
 Extract shared hook:
 ```
