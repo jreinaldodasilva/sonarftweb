@@ -101,7 +101,7 @@
 | L2 | Data visualization with Recharts | ✅ | `recharts` v3.8.1 added; `ProfitChart` component: cumulative P&L area chart with custom tooltip, reference line at zero, gradient fill; shown above trade history table |
 | L3 | Bot status indicator (running/stopped/error) | ✅ | `BotStatus` enum (idle/running/error) in `useBots`; badge shown next to Bots heading; green/blue/red CSS classes |
 | L4 | Paper vs live trading mode toggle | ✅ | `isSimulating` state + `handleToggleSimulation` in `useBots`; toggle button in `Bots.js`; sends `set_simulation` WS command; backend wired |
-| L5 | MSW integration tests | ⬜ | |
+| L5 | MSW integration tests | ✅ | `msw` v2.13.3 added; `src/mocks/handlers.js` covers all 9 sonarft endpoints; `src/mocks/server.js` for Jest; MSW lifecycle in `setupTests.js`; 8 integration tests in `src/integration/workflows.test.js` |
 | L6 | TypeScript migration (start with `utils/`) | ⬜ | |
 | L7 | Vite migration from CRA | ⬜ | |
 | L8 | Performance monitoring (`reportWebVitals`) | ✅ | `src/utils/vitals.js` created; dev: logs to console; prod: `sendBeacon` to `REACT_APP_VITALS_URL` (no-op if unset); `index.js` wired; env examples updated |
