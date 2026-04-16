@@ -88,7 +88,7 @@
 | M11 | Tests for `Crypto.js` | ⬜ | |
 | M12 | Install `jest-axe` + accessibility tests | ⬜ | |
 | M13 | Add PropTypes to all components | ✅ | Added to `Bots`, `Parameters`, `Indicators`, `PrivateRoute`, `ErrorBoundary`; `prop-types` v15.8.1 added to `package.json` |
-| M14 | Remove inline styles | ⬜ | |
+| M14 | Remove inline styles | ✅ | `NavBar.js`: 4× `style={{ textDecoration: "none" }}` → `.nav-link` CSS class; `Bots.js`: 2× opacity inline → `.btn-disabled` CSS class; `App.js`: `PageLoader` inline → `.page-loader` CSS class; zero inline styles remain in `src/` |
 | M15 | Add ESLint `no-console` rule + enforce in CI | ⬜ | |
 
 ---

@@ -11,31 +11,30 @@ const NavBar = () => {
         <nav className="nav">
             <section className="sectionLogo">
                 <img src={logo} alt="SonarFT" className="logo" />
-                <Link style={{ textDecoration: "none" }} to="/">
+                <Link className="nav-link" to="/">
                     <h1>
                         S<span>o</span>narFT
                     </h1>
                 </Link>
             </section>
             <section className="sectionLinks">
-                <Link style={{ textDecoration: "none" }} to="/crypto">
+                <Link className="nav-link" to="/crypto">
                     <h1>
                         Crypt<span>o</span>
                     </h1>
                 </Link>
-                <Link style={{ textDecoration: "none" }} to="/cryptochatgpt">
+                <Link className="nav-link" to="/cryptochatgpt">
                     <h1>
                         Crypt<span>o</span>ChatGPT
                     </h1>
                 </Link>
-                <Link style={{ textDecoration: "none" }} to="/doggy">
+                <Link className="nav-link" to="/doggy">
                     <h1>
                         D<span>o</span>ggy
                     </h1>
                 </Link>
-                {/* Other links can go here */}
             </section>
-            
+
             <section className="sectionLogin">
                 {user ? (
                     <button onClick={handleLogout}>Sign Out</button>
@@ -45,6 +44,6 @@ const NavBar = () => {
             </section>
         </nav>
     );
-}
+};
 
 export default NavBar;

@@ -136,3 +136,7 @@ nav img {
     font-size: 2rem;
   }
 }
+
+.nav-link {
+  text-decoration: none;
+}

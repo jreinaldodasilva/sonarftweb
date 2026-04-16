@@ -137,10 +137,7 @@ const Bots = ({ user }) => {
                         <button
                             onClick={handleCreateButtonClick}
                             disabled={botState !== BotState.REMOVED}
-                            style={{
-                                opacity:
-                                    botState === BotState.REMOVED ? 1 : 0.5,
-                            }}
+                            className={botState !== BotState.REMOVED ? "btn-disabled" : ""}
                         >
                             Create New Bot
                         </button>
@@ -161,13 +158,11 @@ const Bots = ({ user }) => {
                                 botState !== BotState.REMOVED ||
                                 selectedBotId === null
                             }
-                            style={{
-                                opacity:
-                                    botState === BotState.REMOVED &&
-                                    selectedBotId !== null
-                                        ? 1
-                                        : 0.5,
-                            }}
+                            className={
+                                botState !== BotState.REMOVED || selectedBotId === null
+                                    ? "btn-disabled"
+                                    : ""
+                            }
                         >
                             Remove Bot {selectedBotId}
                         </button>

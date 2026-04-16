@@ -178,7 +178,12 @@ Added `prop-types` v15.8.1 to `package.json`. PropTypes added to all 5 component
 Components that only consume context (`NavBar`, `Crypto`, `Dex`, `Forex`, `Token`) have no external props and do not need PropTypes.
 Start with `Bots`, `Parameters`, `Indicators`, `NavBar`, `Crypto`.
 
-**M14 — Remove inline styles (0.5 day)**
+**M14 — Remove inline styles (0.5 day)** — **Completed**
+
+All inline `style={{}}` props removed from source files. Zero inline styles remain in `src/`:
+- `NavBar.js`: 4× `style={{ textDecoration: "none" }}` → `.nav-link` class in `navbar.css`
+- `Bots.js`: 2× opacity inline styles → `.btn-disabled` class in `bots.css`
+- `App.js`: `PageLoader` inline styles → `.page-loader` class in `App.css` (also added `App.css` import)
 Move `style={{ textDecoration: "none" }}` to CSS class; move opacity logic to CSS class toggle.
 
 **M15 — Add ESLint rules to CI (0.5 day)**

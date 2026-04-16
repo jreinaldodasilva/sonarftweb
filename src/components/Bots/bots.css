@@ -102,3 +102,7 @@
     color: #ddaa66;
     border: 1px solid #8a6a2a;
 }
+
+.btn-disabled {
+    opacity: 0.5;
+}

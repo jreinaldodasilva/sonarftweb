@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CryptoTicker from "./components/CryptoTicker/CryptoTicker";
 import { AuthProvider } from "./hooks/AuthProvider";
+import "./App.css";
 import "./styles.css";
 
 // Layout components are always needed — static imports
@@ -15,7 +16,7 @@ const CryptoChatGPT = lazy(() => import("./pages/CryptoChatGPT/CryptoChatGPT"));
 const Doggy = lazy(() => import("./pages/Doggy/Doggy"));
 
 const PageLoader = () => (
-    <div style={{ padding: "40px", textAlign: "center", color: "var(--textPrimary)" }}>
+    <div className="page-loader">
         Loading...
     </div>
 );
