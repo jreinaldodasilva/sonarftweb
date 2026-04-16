@@ -61,10 +61,10 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 | Task | Description | Effort | Priority | Acceptance Criteria |
 |---|---|---|---|---|
-| W1 — Fix memory leak | Add `shouldReconnect` ref to `useWebSocket.jsx`; set `false` in cleanup; guard `connect()` call | 2 hours | High | Unmounting `Bots` does not create orphaned socket; verified by test |
-| W2 — Add `onerror` handler | Add `ws.onerror` in `useWebSocket.jsx`; expose `wsError` state | 1 hour | High | WS errors logged and surfaced to consumer |
-| W3 — Connection status UI | Use `wsOpen` state in `Bots.js` to show "Connected / Disconnected" badge | 2 hours | High | User sees connection status at all times |
-| W4 — Backoff reconnect | Replace immediate reconnect with `setTimeout(connect, delay)` using exponential backoff (1s, 2s, 4s, 8s, 30s cap) | 2 hours | Medium | Reconnect attempts are spaced; server not hammered on restart |
+| W1 — Fix memory leak | Add `shouldReconnect` ref to `useWebSocket.jsx`; set `false` in cleanup; guard `connect()` call | 2 hours | High | Unmounting `Bots` does not create orphaned socket; verified by test | **Completed** — `shouldReconnect` ref set to `false` in cleanup; `connect()` returns early if `!shouldReconnect.current`; `attemptRef` tracks backoff count and resets on open. |
+| W2 — Add `onerror` handler | Add `ws.onerror` in `useWebSocket.jsx`; expose `wsError` state | 1 hour | High | WS errors logged and surfaced to consumer | **Completed** — `ws.onerror` sets `wsError` state; hook returns `{ socket, wsOpen, wsError }`; `Bots.js` renders error banner when `wsError` is set. |
+| W3 — Connection status UI | Use `wsOpen` state in `Bots.js` to show "Connected / Disconnected" badge | 2 hours | High | User sees connection status at all times | **Completed** — `● Connected` / `○ Disconnected` badge rendered next to Bots heading; green/amber CSS classes in `bots.css`. Also added `overflow-x: auto` to `.tables-container` (U3). |
+| W4 — Backoff reconnect | Replace immediate reconnect with `setTimeout(connect, delay)` using exponential backoff (1s, 2s, 4s, 8s, 30s cap) | 2 hours | Medium | Reconnect attempts are spaced; server not hammered on restart | **Completed** — Backoff: 1s, 2s, 4s, 8s, 16s, 30s cap. Attempt counter resets to 0 on successful open. |
 
 ### UX Track
 

@@ -32,7 +32,7 @@ const Bots = ({ user }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const consoleEndRef = useRef(null);
-    const { socket, wsOpen } = useWebSocket(wsUrl);
+    const { socket, wsOpen, wsError } = useWebSocket(wsUrl);
 
     useEffect(() => {
         const fetchBotIds = async () => {
@@ -106,10 +106,18 @@ const Bots = ({ user }) => {
 
     return (
         <div className="bots-container">
-            {isLoading && <div>Loading...</div>}
+            {isLoading && <div className="bots-loading">Loading...</div>}
+            {wsError && (
+                <div className="bots-ws-error">
+                    ⚠ {wsError} — reconnecting...
+                </div>
+            )}
             <div className="bots">
                 <h2>
                     Bots <span>(paper trading)</span>
+                    <span className={`ws-status ${wsOpen ? "ws-status--open" : "ws-status--closed"}`}>
+                        {wsOpen ? "● Connected" : "○ Disconnected"}
+                    </span>
                     <ul>
                         <button
                             onClick={handleCreateButtonClick}

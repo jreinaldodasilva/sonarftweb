@@ -41,10 +41,10 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| W1 | Fix WebSocket memory leak (`shouldReconnect` ref) | ⬜ | |
-| W2 | Add `onerror` handler + expose `wsError` state | ⬜ | |
-| W3 | Add connection status badge to `Bots.js` | ⬜ | |
-| W4 | Exponential backoff reconnect | ⬜ | |
+| W1 | Fix WebSocket memory leak (`shouldReconnect` ref) | ✅ | `shouldReconnect` ref set to `false` in cleanup; `connect()` guards on `shouldReconnect.current`; `attemptRef` tracks backoff attempt count |
+| W2 | Add `onerror` handler + expose `wsError` state | ✅ | `ws.onerror` sets `wsError` state; returned from hook; `Bots.js` shows error banner when `wsError` is set |
+| W3 | Add connection status badge to `Bots.js` | ✅ | `● Connected` / `○ Disconnected` badge next to Bots heading; styled with green/amber CSS classes; also added `overflow-x: auto` to tables container (U3) |
+| W4 | Exponential backoff reconnect | ✅ | Backoff: 1s, 2s, 4s, 8s, 16s, 30s cap; attempt counter resets on successful open |
 
 ---
 
