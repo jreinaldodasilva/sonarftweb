@@ -1,7 +1,14 @@
 import React, { createContext, useState, useEffect, useCallback, useMemo } from "react";
 import netlifyIdentity from "netlify-identity-widget";
+import useIdleTimeout from "./useIdleTimeout";
 
 export const AuthContext = createContext();
+
+// Default: 30 minutes. Override with REACT_APP_IDLE_TIMEOUT_MS env var.
+const IDLE_TIMEOUT_MS = parseInt(
+    process.env.REACT_APP_IDLE_TIMEOUT_MS || "1800000",
+    10
+);
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -40,6 +47,9 @@ export const AuthProvider = ({ children }) => {
             netlifyIdentity.off("logout", handleLogoutSuccess);
         };
     }, [handleLoginSuccess, handleLogoutSuccess]);
+
+    // Auto-logout after IDLE_TIMEOUT_MS of inactivity — only when logged in.
+    useIdleTimeout(handleLogout, IDLE_TIMEOUT_MS, !!user);
 
     // Context value only changes when user changes — prevents re-renders on all
     // 5 consumers (NavBar, Crypto, Dex, Forex, Token) on unrelated AuthProvider renders.

@@ -105,5 +105,5 @@
 | L6 | TypeScript migration (start with `utils/`) | ⬜ | |
 | L7 | Vite migration from CRA | ⬜ | |
 | L8 | Performance monitoring (`reportWebVitals`) | ✅ | `src/utils/vitals.js` created; dev: logs to console; prod: `sendBeacon` to `REACT_APP_VITALS_URL` (no-op if unset); `index.js` wired; env examples updated |
-| L9 | Idle session timeout | ⬜ | |
+| L9 | Idle session timeout | ✅ | `useIdleTimeout` hook (resets on mousemove/keydown/mousedown/touchstart/scroll); wired into `AuthProvider` with `!!user` guard; default 30 min via `REACT_APP_IDLE_TIMEOUT_MS`; 5 test cases |
 | L10 | Tooltips on indicators/parameters | ⬜ | |
