@@ -64,10 +64,10 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| T1 | Tests for `utils/api.js` | ⬜ | |
-| T2 | Tests for `utils/helpers.js` | ⬜ | |
-| T3 | Tests for `useWebSocket.jsx` | ⬜ | |
-| T4 | Create `src/mocks/fixtures.js` | ⬜ | |
+| T1 | Tests for `utils/api.js` | ✅ | 26 test cases across 9 describe blocks; covers success, HTTP error, network failure, fallback chain, auth header, POST body |
+| T2 | Tests for `utils/helpers.js` | ✅ | 7 test cases; covers aggregation, null skipping, empty input |
+| T3 | Tests for `useWebSocket.jsx` | ✅ | 11 test cases across 4 describe blocks; covers connect, wsOpen, wsError, memory leak regression (W1), backoff timing |
+| T4 | Create `src/mocks/fixtures.js` | ✅ | `mockUser`, `mockBotIds`, `mockOrder`, `mockTrade`, `mockParameters`, `mockIndicators`, `mockResponse` helper |
 
 ---
 

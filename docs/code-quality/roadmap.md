@@ -80,10 +80,10 @@ These require no architectural changes — pure configuration, cleanup, and depe
 
 | Task | Description | Effort | Priority |
 |---|---|---|---|
-| T1 — `utils/api.js` tests | Test all 10 functions: success, HTTP error, network error, fallback chain | 1 day | High |
-| T2 — `utils/helpers.js` tests | Test `fetchAllOrders` and `fetchAllTrades` aggregation | 2 hours | Medium |
-| T3 — `useWebSocket` tests | Test connect, wsOpen state, cleanup (memory leak regression), onerror | 1 day | High |
-| T4 — Create `src/mocks/fixtures.js` | Shared test data: `mockUser`, `mockBotIds`, `mockOrder`, `mockParameters`, `mockIndicators` | 2 hours | Medium |
+| T1 — `utils/api.js` tests | Test all 10 functions: success, HTTP error, network error, fallback chain | 1 day | High | **Completed** — 26 test cases across 9 describe blocks. Covers: success paths, HTTP errors, network failures, fallback to local JSON, Authorization header injection, POST body format. |
+| T2 — `utils/helpers.js` tests | Test `fetchAllOrders` and `fetchAllTrades` aggregation | 2 hours | Medium | **Completed** — 7 test cases. Covers: multi-bot aggregation, null response skipping, empty botIds array. |
+| T3 — `useWebSocket` tests | Test connect, wsOpen state, cleanup (memory leak regression), onerror | 1 day | High | **Completed** — 11 test cases across 4 describe blocks. Covers: connection, wsOpen/wsError state, memory leak regression (W1 — no reconnect after unmount), socket close on unmount, exponential backoff timing. |
+| T4 — Create `src/mocks/fixtures.js` | Shared test data: `mockUser`, `mockBotIds`, `mockOrder`, `mockParameters`, `mockIndicators` | 2 hours | Medium | **Completed** — `mockUser`, `mockBotIds`, `mockOrder`, `mockTrade`, `mockParameters`, `mockIndicators`, `mockResponse` helper. |
 
 **Sprint 1 total effort: ~10 days**
 
