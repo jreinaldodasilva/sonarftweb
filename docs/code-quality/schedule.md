@@ -78,7 +78,7 @@
 | M1 | Extract shared `PrivateRoute` component | ✅ | `src/components/PrivateRoute/PrivateRoute.js` created; 4 inline definitions removed from `Crypto.js`, `Dex.js`, `Forex.js`, `Token.js`; 3 test cases added |
 | M2 | Refactor `Parameters` + `Indicators` to functional + shared hook | ⬜ | |
 | M3 | Split `Bots.js` into hook + sub-components | ⬜ | |
-| M4 | Add `ErrorBoundary` around `<Crypto>` page | ⬜ | |
+| M4 | Add `ErrorBoundary` around `<Crypto>` page | ✅ | `ErrorBoundary.js` class component with `getDerivedStateFromError`; fallback shows error message + "Try again" button; error detail shown in dev mode only; 4 test cases added |
 | M5 | Code splitting with `React.lazy` + `Suspense` | ⬜ | |
 | M6 | Cap log array at 500 entries | ⬜ | |
 | M7 | Replace sequential fetches with `Promise.all` | ⬜ | |

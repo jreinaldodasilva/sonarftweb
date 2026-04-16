@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../hooks/AuthProvider";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
+import ErrorBoundary from "../../components/ErrorBoundary/ErrorBoundary";
 import Bots from "../../components/Bots/Bots";
 import Parameters from "../../components/Parameters/Parameters";
 import Indicators from "../../components/Indicators/Indicators";
@@ -13,13 +14,15 @@ const Crypto = () => {
         <section>
             <main className="crypto">
                 <PrivateRoute value={user}>
-                    <div className="parameters-container">
-                        <Parameters clientId={user.id} />
-                        <Indicators clientId={user.id} />
-                    </div>
-                    <div className="bots-container">
-                        <Bots user={user} />
-                    </div>
+                    <ErrorBoundary>
+                        <div className="parameters-container">
+                            <Parameters clientId={user.id} />
+                            <Indicators clientId={user.id} />
+                        </div>
+                        <div className="bots-container">
+                            <Bots user={user} />
+                        </div>
+                    </ErrorBoundary>
                 </PrivateRoute>
             </main>
         </section>

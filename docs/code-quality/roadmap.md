@@ -120,7 +120,9 @@ src/components/Bots/TradeHistoryTable.js — reusable for orders + trades
 src/components/Bots/Bots.js        — orchestrator only
 ```
 
-**M4 — Add `ErrorBoundary` (0.5 day)**
+**M4 — Add `ErrorBoundary` (0.5 day)** — **Completed**
+
+`src/components/ErrorBoundary/ErrorBoundary.js` created as a class component using `getDerivedStateFromError`. Fallback UI shows "Something went wrong" heading, description, and "Try again" button that resets error state. Error message detail shown only in `development` mode. Wrapped the trading content inside `<Crypto>` (inside `<PrivateRoute>`). Added `ErrorBoundary.test.js` with 4 test cases: normal render, fallback on throw, children hidden in error state, reset on Try again click.
 ```
 src/components/ErrorBoundary/ErrorBoundary.js
 ```
