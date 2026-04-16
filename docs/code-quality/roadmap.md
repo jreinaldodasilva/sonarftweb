@@ -135,10 +135,14 @@ Wrap `<Crypto>` page. Show "Something went wrong — reload" fallback.
 All 4 page routes (`Home`, `Crypto`, `CryptoChatGPT`, `Doggy`) converted to `React.lazy` dynamic imports in `App.js`. Layout components (`Header`, `Footer`, `CryptoTicker`) remain static imports as they render on every page. `<Suspense fallback={<PageLoader />}>` wraps the `<Routes>` block. `App.test.js` updated to use `waitFor` to handle async Suspense resolution. Estimated ~60 KB reduction in initial bundle (trading components deferred until `/crypto` is visited).
 Add `React.lazy` + `Suspense` to all routes in `App.js`. Estimated ~60 KB reduction in initial bundle.
 
-**M6 — Cap log array (0.5 day)**
+**M6 — Cap log array (0.5 day)** — **Completed**
+
+`logs` state in `Bots.js` changed from an unbounded string to an array. Each message appended via `setLogs(prev => { const next = [...prev, event.data]; return next.length > MAX_LOG_LINES ? next.slice(-MAX_LOG_LINES) : next; })`. Rendered with `logs.join("\n")`. `MAX_LOG_LINES = 500` constant defined at module level. Eliminates the memory leak and increasingly expensive re-renders for long-running sessions.
 Replace `logs` string with capped array (500 entries max) in `Bots.js`.
 
-**M7 — Parallel fetches (0.5 day)**
+**M7 — Parallel fetches (0.5 day)** — **Completed**
+
+`helpers.js` rewritten: both `fetchAllOrders` and `fetchAllTrades` now use `Promise.all(botIds.map(...))` + `filter(Boolean).flat()`. Reduces N sequential HTTP requests to a single parallel batch. With 5 bots and 200ms average response time, table refresh time drops from ~1s to ~200ms. `helpers.test.js` updated with 2 additional parallel-execution tests.
 Replace `for await` loop in `helpers.js` with `Promise.all`.
 
 **M8 — Memoize `AuthContext` (0.5 day)**

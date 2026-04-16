@@ -11,6 +11,8 @@ import {
 import { fetchAllOrders, fetchAllTrades } from "../../utils/helpers";
 import "./bots.css";
 
+const MAX_LOG_LINES = 500;
+
 const BotState = Object.freeze({
     CREATED: 0,
     REMOVED: 1,
@@ -23,7 +25,7 @@ const Bots = ({ user }) => {
         ? `${WS}/${clientId}?token=${encodeURIComponent(token)}`
         : `${WS}/${clientId}`;
 
-    const [logs, setLogs] = useState("");
+    const [logs, setLogs] = useState([]);
     const [botIds, setBotIds] = useState([]);
     const [botState, setBotState] = useState(BotState.REMOVED);
     const [trades, setTrades] = useState([]);
@@ -55,7 +57,10 @@ const Bots = ({ user }) => {
     useEffect(() => {
         if (wsOpen) {
             socket.onmessage = async (event) => {
-                setLogs((logs) => logs + "\n" + event.data);
+                setLogs((prev) => {
+                    const next = [...prev, event.data];
+                    return next.length > MAX_LOG_LINES ? next.slice(-MAX_LOG_LINES) : next;
+                });
 
                 if (event.data.includes(BOT_CREATED_MESSAGE)) {
                     const ids = await getBotIds(clientId);
@@ -169,7 +174,7 @@ const Bots = ({ user }) => {
                 </h2>
                 <ul>
                     <pre className="console">
-                        {logs}
+                        {logs.join("\n")}
                         <div ref={consoleEndRef} />
                     </pre>
                 </ul>

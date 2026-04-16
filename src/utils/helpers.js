@@ -1,19 +1,11 @@
 import { getOrders, getTrades } from "./api";
 
 export const fetchAllOrders = async (botIds) => {
-  const allOrders = [];
-  for (const id of botIds) {
-    const orderData = await getOrders(id);
-    if (orderData) allOrders.push(...orderData);
-  }
-  return allOrders;
+    const results = await Promise.all(botIds.map((id) => getOrders(id)));
+    return results.filter(Boolean).flat();
 };
 
 export const fetchAllTrades = async (botIds) => {
-  const allTrades = [];
-  for (const id of botIds) {
-    const tradeData = await getTrades(id);
-    if (tradeData) allTrades.push(...tradeData);
-  }
-  return allTrades;
+    const results = await Promise.all(botIds.map((id) => getTrades(id)));
+    return results.filter(Boolean).flat();
 };

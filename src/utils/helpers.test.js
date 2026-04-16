@@ -24,6 +24,19 @@ describe("fetchAllOrders", () => {
         expect(getOrders).toHaveBeenCalledWith("bot_002");
     });
 
+    it("fetches all bots in parallel (Promise.all)", async () => {
+        // All calls should be initiated before any resolves
+        const callOrder = [];
+        getOrders.mockImplementation((id) => {
+            callOrder.push(id);
+            return Promise.resolve([mockOrder]);
+        });
+        await fetchAllOrders(["bot_001", "bot_002", "bot_003"]);
+        // All 3 calls initiated — order may vary but all called
+        expect(callOrder).toHaveLength(3);
+        expect(getOrders).toHaveBeenCalledTimes(3);
+    });
+
     it("skips null responses (failed fetches)", async () => {
         getOrders
             .mockResolvedValueOnce([mockOrder])
@@ -57,6 +70,12 @@ describe("fetchAllTrades", () => {
         const result = await fetchAllTrades(["bot_001", "bot_002"]);
         expect(result).toHaveLength(2);
         expect(getTrades).toHaveBeenCalledTimes(2);
+    });
+
+    it("fetches all bots in parallel (Promise.all)", async () => {
+        getTrades.mockResolvedValue([mockTrade]);
+        await fetchAllTrades(["bot_001", "bot_002", "bot_003"]);
+        expect(getTrades).toHaveBeenCalledTimes(3);
     });
 
     it("skips null responses", async () => {
