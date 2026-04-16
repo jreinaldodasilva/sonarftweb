@@ -230,7 +230,7 @@ Add `npm run eslint` step to `cloudbuild.yaml`. Add `no-console` rule to ESLint 
 
 | Task | Description | Effort |
 |---|---|---|
-| L1 — Structured WS protocol | Coordinate with sonarft backend to send JSON events instead of log strings | 3 days (both sides) |
+| L1 — Structured WS protocol | Coordinate with sonarft backend to send JSON events instead of log strings | 3 days (both sides) | **Completed** — Backend: `send_logs()` wraps every log in `{"type":"log","level","message","ts"}` and emits `bot_created`, `bot_removed`, `order_success`, `trade_success` structured events. Frontend: `parseMessage()` in `useBots.js` parses JSON and dispatches via `switch(msg.type)`; plain-text fallback for legacy compatibility. String-matching (`includes()`) fully retired from `useBots.js`. |
 | L2 — Data visualization | Add Recharts for P&L curve, trade frequency chart | 5 days |
 | L3 — Bot status indicator | Show running/stopped/error badge per bot using WS events | 2 days |
 | L4 — Paper vs live toggle | UI control for `is_simulating_trade` config | 2 days |

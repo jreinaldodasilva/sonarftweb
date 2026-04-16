@@ -1,13 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import useWebSocket from "./useWebSocket";
 import { getBotIds, getAuthToken } from "../utils/api";
-import {
-    WS,
-    BOT_CREATED_MESSAGE,
-    BOT_REMOVED_MESSAGE,
-    ORDER_SUCCESS,
-    TRADE_SUCCESS,
-} from "../utils/constants";
+import { WS } from "../utils/constants";
 import { fetchAllOrders, fetchAllTrades } from "../utils/helpers";
 
 const MAX_LOG_LINES = 500;
@@ -16,6 +10,19 @@ export const BotState = Object.freeze({
     CREATED: 0,
     REMOVED: 1,
 });
+
+// Parse a raw WebSocket message into a structured event.
+// Supports JSON protocol (new) with plain-text fallback (legacy).
+const parseMessage = (raw) => {
+    try {
+        const msg = JSON.parse(raw);
+        if (msg && typeof msg.type === "string") return msg;
+    } catch {
+        // Not JSON — treat as legacy plain-text log
+    }
+    // Legacy fallback: wrap plain text as a log event
+    return { type: "log", level: "INFO", message: raw };
+};
 
 const useBots = (clientId) => {
     const token = getAuthToken();
@@ -56,32 +63,46 @@ const useBots = (clientId) => {
         if (!wsOpen || !socket) return;
 
         socket.onmessage = async (event) => {
-            setLogs((prev) => {
-                const next = [...prev, event.data];
-                return next.length > MAX_LOG_LINES ? next.slice(-MAX_LOG_LINES) : next;
-            });
+            const msg = parseMessage(event.data);
 
-            if (event.data.includes(BOT_CREATED_MESSAGE)) {
-                const ids = await getBotIds(clientId);
-                setSelectedBotId(ids[ids.length - 1]);
-                setBotIds(ids);
-                socket.send(JSON.stringify({
-                    type: "keypress",
-                    key: "run",
-                    botid: ids[ids.length - 1],
-                }));
-            } else if (event.data.includes(BOT_REMOVED_MESSAGE)) {
-                setBotState(BotState.REMOVED);
+            // Always append log messages to the console
+            if (msg.type === "log") {
+                setLogs((prev) => {
+                    const next = [...prev, msg.message];
+                    return next.length > MAX_LOG_LINES ? next.slice(-MAX_LOG_LINES) : next;
+                });
+                return;
             }
 
-            if (event.data.includes(ORDER_SUCCESS)) {
-                const allOrders = await fetchAllOrders(botIds);
-                setOrders(allOrders);
-            }
-
-            if (event.data.includes(TRADE_SUCCESS)) {
-                const allTrades = await fetchAllTrades(botIds);
-                setTrades(allTrades);
+            // Structured lifecycle events
+            switch (msg.type) {
+                case "bot_created": {
+                    const ids = await getBotIds(clientId);
+                    setSelectedBotId(ids[ids.length - 1]);
+                    setBotIds(ids);
+                    socket.send(JSON.stringify({
+                        type: "keypress",
+                        key: "run",
+                        botid: ids[ids.length - 1],
+                    }));
+                    break;
+                }
+                case "bot_removed":
+                    setBotState(BotState.REMOVED);
+                    break;
+                case "order_success": {
+                    const allOrders = await fetchAllOrders(botIds);
+                    setOrders(allOrders);
+                    break;
+                }
+                case "trade_success": {
+                    const allTrades = await fetchAllTrades(botIds);
+                    setTrades(allTrades);
+                    break;
+                }
+                default:
+                    // Unknown event type — ignore silently
+                    break;
             }
         };
     }, [clientId, wsOpen, socket, botIds]);

@@ -97,7 +97,7 @@
 
 | # | Task | Status | Notes |
 |---|---|---|---|
-| L1 | Structured JSON WebSocket protocol | ⬜ | Requires sonarft backend coordination |
+| L1 | Structured JSON WebSocket protocol | ✅ | Backend: `send_logs()` wraps all messages in JSON; emits `bot_created`, `bot_removed`, `order_success`, `trade_success` events. Frontend: `parseMessage()` in `useBots.js` dispatches via `switch(msg.type)`; plain-text fallback for legacy compatibility |
 | L2 | Data visualization with Recharts | ⬜ | |
 | L3 | Bot status indicator (running/stopped/error) | ⬜ | |
 | L4 | Paper vs live trading mode toggle | ⬜ | |
