@@ -98,7 +98,7 @@
 | # | Task | Status | Notes |
 |---|---|---|---|
 | L1 | Structured JSON WebSocket protocol | ✅ | Backend: `send_logs()` wraps all messages in JSON; emits `bot_created`, `bot_removed`, `order_success`, `trade_success` events. Frontend: `parseMessage()` in `useBots.js` dispatches via `switch(msg.type)`; plain-text fallback for legacy compatibility |
-| L2 | Data visualization with Recharts | ⬜ | |
+| L2 | Data visualization with Recharts | ✅ | `recharts` v3.8.1 added; `ProfitChart` component: cumulative P&L area chart with custom tooltip, reference line at zero, gradient fill; shown above trade history table |
 | L3 | Bot status indicator (running/stopped/error) | ✅ | `BotStatus` enum (idle/running/error) in `useBots`; badge shown next to Bots heading; green/blue/red CSS classes |
 | L4 | Paper vs live trading mode toggle | ✅ | `isSimulating` state + `handleToggleSimulation` in `useBots`; toggle button in `Bots.js`; sends `set_simulation` WS command; backend wired |
 | L5 | MSW integration tests | ⬜ | |

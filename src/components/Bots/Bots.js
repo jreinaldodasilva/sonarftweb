@@ -4,6 +4,7 @@ import useBots, { BotStatus } from "../../hooks/useBots";
 import BotControls from "./BotControls";
 import BotConsole from "./BotConsole";
 import TradeHistoryTable from "./TradeHistoryTable";
+import ProfitChart from "../Charts/ProfitChart";
 import "./bots.css";
 
 const Bots = ({ user }) => {
@@ -74,6 +75,7 @@ const Bots = ({ user }) => {
                 <TradeHistoryTable rows={orders} />
 
                 <h2>Trade History</h2>
+                <ProfitChart trades={trades} />
                 <TradeHistoryTable rows={trades} />
             </div>
         </div>
