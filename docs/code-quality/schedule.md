@@ -77,7 +77,7 @@
 |---|---|---|---|
 | M1 | Extract shared `PrivateRoute` component | ✅ | `src/components/PrivateRoute/PrivateRoute.js` created; 4 inline definitions removed from `Crypto.js`, `Dex.js`, `Forex.js`, `Token.js`; 3 test cases added |
 | M2 | Refactor `Parameters` + `Indicators` to functional + shared hook | ✅ | `useConfigCheckboxes` hook created (105 lines); both components refactored to functional (~74/76 lines each); 8 test cases added; no class components remain except `ErrorBoundary` |
-| M3 | Split `Bots.js` into hook + sub-components | ⬜ | |
+| M3 | Split `Bots.js` into hook + sub-components | ✅ | `useBots.js` hook (126 lines); `BotControls.js` (59); `BotConsole.js` (25); `TradeHistoryTable.js` (69, reusable for orders+trades); `Bots.js` orchestrator (71); 5 tests added |
 | M4 | Add `ErrorBoundary` around `<Crypto>` page | ✅ | `ErrorBoundary.js` class component with `getDerivedStateFromError`; fallback shows error message + "Try again" button; error detail shown in dev mode only; 4 test cases added |
 | M5 | Code splitting with `React.lazy` + `Suspense` | ✅ | All 4 page routes lazy-loaded in `App.js`; `PageLoader` fallback component; `App.test.js` updated to use `waitFor` for async Suspense resolution |
 | M6 | Cap log array at 500 entries | ✅ | `logs` state changed from unbounded string to array; capped at `MAX_LOG_LINES = 500` via `slice(-500)`; rendered with `logs.join("\\n")` |

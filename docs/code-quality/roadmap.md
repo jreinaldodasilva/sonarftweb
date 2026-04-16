@@ -125,7 +125,17 @@ src/hooks/useConfigCheckboxes.js
 ```
 Replace both class components with functional wrappers using this hook.
 
-**M3 — Split `Bots.js` (3 days)**
+**M3 — Split `Bots.js` (3 days)** — **Completed**
+
+Original 290-line monolithic `Bots.js` split into 5 focused files:
+
+- `src/hooks/useBots.js` (126 lines) — all state, WebSocket, and data fetching. Exports `BotState` enum. Handlers wrapped in `useCallback`.
+- `src/components/Bots/BotControls.js` (59 lines) — create/select/remove buttons. `aria-label` added to bot selector. `wsOpen` gates remove button.
+- `src/components/Bots/BotConsole.js` (25 lines) — log `<pre>` with auto-scroll ref.
+- `src/components/Bots/TradeHistoryTable.js` (69 lines) — reusable table used for both orders and trades (eliminates the duplicate table). Full PropTypes with shape.
+- `src/components/Bots/Bots.js` (71 lines) — thin orchestrator composing the above.
+
+Added `TradeHistoryTable.test.js` with 5 test cases.
 ```
 src/hooks/useBots.js              — WS + state machine + fetches
 src/components/Bots/BotControls.js — create/select/remove buttons
