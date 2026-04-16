@@ -104,6 +104,6 @@
 | L5 | MSW integration tests | ⬜ | |
 | L6 | TypeScript migration (start with `utils/`) | ⬜ | |
 | L7 | Vite migration from CRA | ⬜ | |
-| L8 | Performance monitoring (`reportWebVitals`) | ⬜ | |
+| L8 | Performance monitoring (`reportWebVitals`) | ✅ | `src/utils/vitals.js` created; dev: logs to console; prod: `sendBeacon` to `REACT_APP_VITALS_URL` (no-op if unset); `index.js` wired; env examples updated |
 | L9 | Idle session timeout | ⬜ | |
 | L10 | Tooltips on indicators/parameters | ⬜ | |

@@ -237,7 +237,7 @@ Add `npm run eslint` step to `cloudbuild.yaml`. Add `no-console` rule to ESLint 
 | L5 — MSW integration tests | Install MSW; write full user workflow tests | 5 days |
 | L6 — TypeScript migration | Start with `utils/api.js` and `utils/helpers.js`; expand incrementally | 10 days |
 | L7 — Vite migration | Replace CRA with Vite for faster builds, better tree-shaking | 3 days |
-| L8 — Performance monitoring | Configure `reportWebVitals` with reporting endpoint | 1 day |
+| L8 — Performance monitoring | Configure `reportWebVitals` with reporting endpoint | 1 day | **Completed** — Created `src/utils/vitals.js` with `sendVitals` function. Dev: logs `[Web Vitals] LCP: 1200ms (good)` to console. Prod: sends JSON beacon via `navigator.sendBeacon` (non-blocking, survives page unload) to `REACT_APP_VITALS_URL`; falls back to `fetch` with `keepalive: true`; silently no-ops if URL not configured. `index.js` updated to pass `sendVitals` to `reportWebVitals`. Env example files updated with `REACT_APP_VITALS_URL` documentation. |
 | L9 — Idle session timeout | Auto-logout after N minutes of inactivity | 1 day |
 | L10 — Tooltips on indicators | Add `title` attributes or tooltip component to all indicator/parameter labels | 2 days |
 
