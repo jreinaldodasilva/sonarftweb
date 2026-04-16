@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import "./indicators.css";
 import { getDefaultIndicators, getIndicators, updateIndicators } from "../../utils/api";
 
@@ -151,5 +152,9 @@ class Indicators extends Component {
         );
     }
 }
+
+Indicators.propTypes = {
+    clientId: PropTypes.string.isRequired,
+};
 
 export default Indicators;

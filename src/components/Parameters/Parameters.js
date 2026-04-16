@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import "./parameters.css";
 import { getDefaultParameters, getParameters, updateParameters } from "../../utils/api";
 
@@ -145,5 +146,9 @@ class Parameters extends Component {
         );
     }
 }
+
+Parameters.propTypes = {
+    clientId: PropTypes.string.isRequired,
+};
 
 export default Parameters;

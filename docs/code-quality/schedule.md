@@ -87,7 +87,7 @@
 | M10 | Tests for `Bots.js` | ⬜ | |
 | M11 | Tests for `Crypto.js` | ⬜ | |
 | M12 | Install `jest-axe` + accessibility tests | ⬜ | |
-| M13 | Add PropTypes to all components | ⬜ | |
+| M13 | Add PropTypes to all components | ✅ | Added to `Bots`, `Parameters`, `Indicators`, `PrivateRoute`, `ErrorBoundary`; `prop-types` v15.8.1 added to `package.json` |
 | M14 | Remove inline styles | ⬜ | |
 | M15 | Add ESLint `no-console` rule + enforce in CI | ⬜ | |
 

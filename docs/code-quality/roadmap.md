@@ -166,7 +166,16 @@ Add accessibility assertions to all component tests. Will catch heading hierarch
 
 ### Code Quality
 
-**M13 — Add PropTypes to all components (1 day)**
+**M13 — Add PropTypes to all components (1 day)** — **Completed**
+
+Added `prop-types` v15.8.1 to `package.json`. PropTypes added to all 5 components that receive external props:
+- `Bots`: `user: shape({ id: string.isRequired, email: string }).isRequired`
+- `Parameters`: `clientId: string.isRequired`
+- `Indicators`: `clientId: string.isRequired`
+- `PrivateRoute`: `children: node.isRequired`, `value: any` (default `null`)
+- `ErrorBoundary`: `children: node.isRequired`
+
+Components that only consume context (`NavBar`, `Crypto`, `Dex`, `Forex`, `Token`) have no external props and do not need PropTypes.
 Start with `Bots`, `Parameters`, `Indicators`, `NavBar`, `Crypto`.
 
 **M14 — Remove inline styles (0.5 day)**

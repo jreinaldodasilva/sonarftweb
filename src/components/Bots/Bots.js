@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import PropTypes from "prop-types";
 import useWebSocket from "../../hooks/useWebSocket";
 import { getBotIds, getAuthToken } from "../../utils/api";
 import {
@@ -277,6 +278,13 @@ const Bots = ({ user }) => {
             </div>
         </div>
     );
+};
+
+Bots.propTypes = {
+    user: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        email: PropTypes.string,
+    }).isRequired,
 };
 
 export default Bots;
