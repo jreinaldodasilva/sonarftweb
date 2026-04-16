@@ -1,24 +1,31 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, waitFor } from "@testing-library/react";
+import App from "./App";
 
-describe('App', () => {
-    it('renders without crashing', () => {
+describe("App", () => {
+    it("renders without crashing", async () => {
         render(<App />);
-        expect(document.body).toBeTruthy();
+        // Suspense resolves async — wait for any content to appear
+        await waitFor(() => expect(document.body).toBeTruthy());
     });
 
-    it('renders the SonarFT logo link', () => {
+    it("renders the SonarFT logo link", async () => {
         render(<App />);
-        expect(screen.getByAltText('SonarFT')).toBeInTheDocument();
+        await waitFor(() =>
+            expect(screen.getByAltText("SonarFT")).toBeInTheDocument()
+        );
     });
 
-    it('renders the Sign In button when user is not authenticated', () => {
+    it("renders the Sign In button when user is not authenticated", async () => {
         render(<App />);
-        expect(screen.getByText('Sign In')).toBeInTheDocument();
+        await waitFor(() =>
+            expect(screen.getByText("Sign In")).toBeInTheDocument()
+        );
     });
 
-    it('renders the Crypto navigation link', () => {
+    it("renders the Crypto navigation link", async () => {
         render(<App />);
-        expect(screen.getByRole('link', { name: /crypto/i })).toBeInTheDocument();
+        await waitFor(() =>
+            expect(screen.getByRole("link", { name: /crypto/i })).toBeInTheDocument()
+        );
     });
 });

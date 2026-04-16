@@ -1,30 +1,41 @@
 // App.js
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import CryptoTicker from "./components/CryptoTicker/CryptoTicker";
-import Home from "./pages/Home/Home";
-import Crypto from "./pages/Crypto/Crypto";
-import CryptoChatGPT from "./pages/CryptoChatGPT/CryptoChatGPT";
-import Doggy from "./pages/Doggy/Doggy";
+import { AuthProvider } from "./hooks/AuthProvider";
 import "./styles.css";
-import { AuthProvider } from "./hooks/AuthProvider"; // Importing AuthProvider
+
+// Layout components are always needed — static imports
+// Page routes are lazy-loaded: each becomes a separate bundle chunk
+const Home = lazy(() => import("./pages/Home/Home"));
+const Crypto = lazy(() => import("./pages/Crypto/Crypto"));
+const CryptoChatGPT = lazy(() => import("./pages/CryptoChatGPT/CryptoChatGPT"));
+const Doggy = lazy(() => import("./pages/Doggy/Doggy"));
+
+const PageLoader = () => (
+    <div style={{ padding: "40px", textAlign: "center", color: "var(--textPrimary)" }}>
+        Loading...
+    </div>
+);
 
 const App = () => {
     return (
-        <AuthProvider> {/* Using AuthProvider to wrap all components */}
+        <AuthProvider>
             <Router>
                 <div className="App">
                     <Header />
-                    <CryptoTicker />                        
+                    <CryptoTicker />
                     <main className="main-container">
-                        <Routes>
-                            <Route path="/" element={<Home />} />
-                            <Route path="/crypto" element={<Crypto />} />
-                            <Route path="/cryptochatgpt" element={<CryptoChatGPT />} />
-                            <Route path="/doggy" element={<Doggy />} />
-                        </Routes>
+                        <Suspense fallback={<PageLoader />}>
+                            <Routes>
+                                <Route path="/" element={<Home />} />
+                                <Route path="/crypto" element={<Crypto />} />
+                                <Route path="/cryptochatgpt" element={<CryptoChatGPT />} />
+                                <Route path="/doggy" element={<Doggy />} />
+                            </Routes>
+                        </Suspense>
                     </main>
                     <Footer />
                 </div>

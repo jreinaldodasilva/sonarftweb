@@ -79,7 +79,7 @@
 | M2 | Refactor `Parameters` + `Indicators` to functional + shared hook | ⬜ | |
 | M3 | Split `Bots.js` into hook + sub-components | ⬜ | |
 | M4 | Add `ErrorBoundary` around `<Crypto>` page | ✅ | `ErrorBoundary.js` class component with `getDerivedStateFromError`; fallback shows error message + "Try again" button; error detail shown in dev mode only; 4 test cases added |
-| M5 | Code splitting with `React.lazy` + `Suspense` | ⬜ | |
+| M5 | Code splitting with `React.lazy` + `Suspense` | ✅ | All 4 page routes lazy-loaded in `App.js`; `PageLoader` fallback component; `App.test.js` updated to use `waitFor` for async Suspense resolution |
 | M6 | Cap log array at 500 entries | ⬜ | |
 | M7 | Replace sequential fetches with `Promise.all` | ⬜ | |
 | M8 | Memoize `AuthContext` value | ⬜ | |

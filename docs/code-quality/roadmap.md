@@ -130,7 +130,9 @@ Wrap `<Crypto>` page. Show "Something went wrong — reload" fallback.
 
 ### Performance
 
-**M5 — Code splitting (0.5 day)**
+**M5 — Code splitting (0.5 day)** — **Completed**
+
+All 4 page routes (`Home`, `Crypto`, `CryptoChatGPT`, `Doggy`) converted to `React.lazy` dynamic imports in `App.js`. Layout components (`Header`, `Footer`, `CryptoTicker`) remain static imports as they render on every page. `<Suspense fallback={<PageLoader />}>` wraps the `<Routes>` block. `App.test.js` updated to use `waitFor` to handle async Suspense resolution. Estimated ~60 KB reduction in initial bundle (trading components deferred until `/crypto` is visited).
 Add `React.lazy` + `Suspense` to all routes in `App.js`. Estimated ~60 KB reduction in initial bundle.
 
 **M6 — Cap log array (0.5 day)**
