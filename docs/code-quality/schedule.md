@@ -82,7 +82,7 @@
 | M5 | Code splitting with `React.lazy` + `Suspense` | ✅ | All 4 page routes lazy-loaded in `App.js`; `PageLoader` fallback component; `App.test.js` updated to use `waitFor` for async Suspense resolution |
 | M6 | Cap log array at 500 entries | ✅ | `logs` state changed from unbounded string to array; capped at `MAX_LOG_LINES = 500` via `slice(-500)`; rendered with `logs.join("\\n")` |
 | M7 | Replace sequential fetches with `Promise.all` | ✅ | `helpers.js` rewritten: `for await` loops replaced with `Promise.all` + `filter(Boolean).flat()`; 2 parallel-execution tests added |
-| M8 | Memoize `AuthContext` value | ⬜ | |
+| M8 | Memoize `AuthContext` value | ✅ | `handleLogin`, `handleLogout`, `handleLoginSuccess`, `handleLogoutSuccess` wrapped in `useCallback`; context value wrapped in `useMemo([user, handleLogin, handleLogout])`; `useEffect` deps array now correct |
 | M9 | Tests for `Parameters` + `Indicators` | ⬜ | |
 | M10 | Tests for `Bots.js` | ⬜ | |
 | M11 | Tests for `Crypto.js` | ⬜ | |

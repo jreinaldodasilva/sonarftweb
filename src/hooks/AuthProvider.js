@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback, useMemo } from "react";
 import netlifyIdentity from "netlify-identity-widget";
 
 export const AuthContext = createContext();
@@ -6,45 +6,50 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    const handleLogin = () => {
+    // Stable references — never recreated, so context consumers don't re-render
+    // when AuthProvider re-renders for reasons unrelated to user state.
+    const handleLogin = useCallback(() => {
         netlifyIdentity.open();
-    };
+    }, []);
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         netlifyIdentity.logout();
-    };
+    }, []);
 
-    const handleLoginSuccess = (user) => {
-        setUser(user);
-    };
+    const handleLoginSuccess = useCallback((loggedInUser) => {
+        setUser(loggedInUser);
+    }, []);
 
-    const handleLogoutSuccess = () => {
+    const handleLogoutSuccess = useCallback(() => {
         setUser(null);
-    };
+    }, []);
 
     useEffect(() => {
-        // Initialize Netlify Identity
         netlifyIdentity.init({ locale: "en" });
 
-        // Event listeners
         netlifyIdentity.on("login", handleLoginSuccess);
         netlifyIdentity.on("logout", handleLogoutSuccess);
 
-        // Check for the already logged-in user
         const currentUser = netlifyIdentity.currentUser();
         if (currentUser) {
             setUser(currentUser);
         }
 
-        // Cleanup event listeners
         return () => {
             netlifyIdentity.off("login", handleLoginSuccess);
             netlifyIdentity.off("logout", handleLogoutSuccess);
         };
-    }, []);
+    }, [handleLoginSuccess, handleLogoutSuccess]);
+
+    // Context value only changes when user changes — prevents re-renders on all
+    // 5 consumers (NavBar, Crypto, Dex, Forex, Token) on unrelated AuthProvider renders.
+    const contextValue = useMemo(
+        () => ({ user, handleLogin, handleLogout }),
+        [user, handleLogin, handleLogout]
+    );
 
     return (
-        <AuthContext.Provider value={{ user, handleLogin, handleLogout }}>
+        <AuthContext.Provider value={contextValue}>
             {children}
         </AuthContext.Provider>
     );

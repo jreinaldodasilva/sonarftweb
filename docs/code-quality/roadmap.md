@@ -145,7 +145,9 @@ Replace `logs` string with capped array (500 entries max) in `Bots.js`.
 `helpers.js` rewritten: both `fetchAllOrders` and `fetchAllTrades` now use `Promise.all(botIds.map(...))` + `filter(Boolean).flat()`. Reduces N sequential HTTP requests to a single parallel batch. With 5 bots and 200ms average response time, table refresh time drops from ~1s to ~200ms. `helpers.test.js` updated with 2 additional parallel-execution tests.
 Replace `for await` loop in `helpers.js` with `Promise.all`.
 
-**M8 — Memoize `AuthContext` (0.5 day)**
+**M8 — Memoize `AuthContext` (0.5 day)** — **Completed**
+
+`AuthProvider.js` updated: `handleLogin`, `handleLogout`, `handleLoginSuccess`, `handleLogoutSuccess` all wrapped in `useCallback` with stable empty dependency arrays. Context value wrapped in `useMemo([user, handleLogin, handleLogout])` — only creates a new object when `user` changes. `useEffect` dependency array now correctly lists `handleLoginSuccess` and `handleLogoutSuccess` (previously missing, causing a lint warning). All 5 context consumers (`NavBar`, `Crypto`, `Dex`, `Forex`, `Token`) no longer re-render on unrelated `AuthProvider` renders.
 Wrap `handleLogin`/`handleLogout` in `useCallback`; memoize context value with `useMemo`.
 
 ### Testing — Phase 2 (Component tests)
