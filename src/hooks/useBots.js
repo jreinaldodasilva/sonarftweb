@@ -11,6 +11,12 @@ export const BotState = Object.freeze({
     REMOVED: 1,
 });
 
+export const BotStatus = Object.freeze({
+    IDLE:    "idle",
+    RUNNING: "running",
+    ERROR:   "error",
+});
+
 // Parse a raw WebSocket message into a structured event.
 // Supports JSON protocol (new) with plain-text fallback (legacy).
 const parseMessage = (raw) => {
@@ -38,6 +44,8 @@ const useBots = (clientId) => {
     const [selectedBotId, setSelectedBotId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [fetchError, setFetchError] = useState(null);
+    const [botStatus, setBotStatus] = useState(BotStatus.IDLE);
+    const [isSimulating, setIsSimulating] = useState(true);
 
     const { socket, wsOpen, wsError } = useWebSocket(wsUrl);
 
@@ -80,6 +88,7 @@ const useBots = (clientId) => {
                     const ids = await getBotIds(clientId);
                     setSelectedBotId(ids[ids.length - 1]);
                     setBotIds(ids);
+                    setBotStatus(BotStatus.RUNNING);
                     socket.send(JSON.stringify({
                         type: "keypress",
                         key: "run",
@@ -89,6 +98,7 @@ const useBots = (clientId) => {
                 }
                 case "bot_removed":
                     setBotState(BotState.REMOVED);
+                    setBotStatus(BotStatus.IDLE);
                     break;
                 case "order_success": {
                     const allOrders = await fetchAllOrders(botIds);
@@ -127,10 +137,26 @@ const useBots = (clientId) => {
         }));
     }, [socket, selectedBotId]);
 
+    const handleToggleSimulation = useCallback(() => {
+        setIsSimulating((prev) => {
+            const next = !prev;
+            if (socket) {
+                socket.send(JSON.stringify({
+                    type: "keypress",
+                    key: "set_simulation",
+                    value: next,
+                }));
+            }
+            return next;
+        });
+    }, [socket]);
+
     return {
         logs,
         botIds,
         botState,
+        botStatus,
+        isSimulating,
         orders,
         trades,
         selectedBotId,
@@ -141,6 +167,7 @@ const useBots = (clientId) => {
         wsError,
         handleCreate,
         handleRemove,
+        handleToggleSimulation,
     };
 };
 

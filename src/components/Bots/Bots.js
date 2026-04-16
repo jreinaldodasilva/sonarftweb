@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useBots from "../../hooks/useBots";
+import useBots, { BotStatus } from "../../hooks/useBots";
 import BotControls from "./BotControls";
 import BotConsole from "./BotConsole";
 import TradeHistoryTable from "./TradeHistoryTable";
@@ -11,6 +11,8 @@ const Bots = ({ user }) => {
         logs,
         botIds,
         botState,
+        botStatus,
+        isSimulating,
         orders,
         trades,
         selectedBotId,
@@ -21,7 +23,14 @@ const Bots = ({ user }) => {
         wsError,
         handleCreate,
         handleRemove,
+        handleToggleSimulation,
     } = useBots(user.id);
+
+    const statusLabel = {
+        [BotStatus.IDLE]:    { text: "● Idle",    cls: "bot-status--idle" },
+        [BotStatus.RUNNING]: { text: "● Running", cls: "bot-status--running" },
+        [BotStatus.ERROR]:   { text: "● Error",   cls: "bot-status--error" },
+    }[botStatus];
 
     return (
         <div className="bots-container">
@@ -33,9 +42,19 @@ const Bots = ({ user }) => {
 
             <div className="bots">
                 <h2>
-                    Bots <span>(paper trading)</span>
+                    Bots
+                    <button
+                        className={`mode-toggle ${isSimulating ? "mode-toggle--paper" : "mode-toggle--live"}`}
+                        onClick={handleToggleSimulation}
+                        title={isSimulating ? "Switch to live trading" : "Switch to paper trading"}
+                    >
+                        {isSimulating ? "📝 Paper" : "⚡ Live"}
+                    </button>
                     <span className={`ws-status ${wsOpen ? "ws-status--open" : "ws-status--closed"}`}>
                         {wsOpen ? "● Connected" : "○ Disconnected"}
+                    </span>
+                    <span className={`bot-status ${statusLabel.cls}`}>
+                        {statusLabel.text}
                     </span>
                 </h2>
                 <BotControls

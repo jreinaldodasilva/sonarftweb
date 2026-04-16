@@ -106,3 +106,64 @@
 .btn-disabled {
     opacity: 0.5;
 }
+
+.bot-status {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    padding: 2px 8px;
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+.bot-status--idle {
+    background-color: #1a2a3a;
+    color: #7a9ab0;
+    border: 1px solid #2a4a6a;
+}
+
+.bot-status--running {
+    background-color: #1a3a1a;
+    color: #88dd88;
+    border: 1px solid #4a8a4a;
+}
+
+.bot-status--error {
+    background-color: #5c1a1a;
+    color: #ffcccc;
+    border: 1px solid #a33;
+}
+
+.mode-toggle {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    padding: 2px 10px;
+    border-radius: 10px;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid;
+    transition: all 0.2s ease;
+}
+
+.mode-toggle--paper {
+    background-color: #1a2a3a;
+    color: #7ab0d0;
+    border-color: #2a5a8a;
+}
+
+.mode-toggle--paper:hover {
+    background-color: #2a3a4a;
+}
+
+.mode-toggle--live {
+    background-color: #3a1a1a;
+    color: #ffaaaa;
+    border-color: #8a2a2a;
+}
+
+.mode-toggle--live:hover {
+    background-color: #4a2a2a;
+}
