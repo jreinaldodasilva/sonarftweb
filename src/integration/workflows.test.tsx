@@ -1,4 +1,5 @@
 import React from "react";
+import { describe, it, expect } from "vitest";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { http, HttpResponse } from "msw";
@@ -23,7 +24,7 @@ describe("Parameters — integration", () => {
         await waitFor(() => screen.getByText("Binance"));
         fireEvent.click(screen.getByText("Set bot parameters"));
         await waitFor(() =>
-            expect(screen.getByText("\u2713 Saved")).toBeInTheDocument()
+            expect(screen.getByText("✓ Saved")).toBeInTheDocument()
         );
     });
 
@@ -37,7 +38,7 @@ describe("Parameters — integration", () => {
         await waitFor(() => screen.getByText("Binance"));
         fireEvent.click(screen.getByText("Set bot parameters"));
         await waitFor(() =>
-            expect(screen.getByText("\u2717 Error \u2014 try again")).toBeInTheDocument()
+            expect(screen.getByText("✗ Error — try again")).toBeInTheDocument()
         );
     });
 
@@ -69,7 +70,7 @@ describe("Indicators — integration", () => {
         await waitFor(() => screen.getByText("5min"));
         fireEvent.click(screen.getByText("Set bot indicators"));
         await waitFor(() =>
-            expect(screen.getByText("\u2713 Saved")).toBeInTheDocument()
+            expect(screen.getByText("✓ Saved")).toBeInTheDocument()
         );
     });
 });

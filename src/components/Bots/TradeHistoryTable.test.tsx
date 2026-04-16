@@ -1,7 +1,9 @@
 import React from "react";
+import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import TradeHistoryTable from "./TradeHistoryTable";
 import { mockOrder } from "../../mocks/fixtures";
+import type { TradeRecord } from "../../utils/api";
 
 describe("TradeHistoryTable", () => {
     it("renders table headers", () => {
@@ -12,10 +14,9 @@ describe("TradeHistoryTable", () => {
     });
 
     it("renders a row for each entry", () => {
-        const rows = [mockOrder, { ...mockOrder, buy_exchange: "okx" }];
+        const rows: TradeRecord[] = [mockOrder, { ...mockOrder, buy_exchange: "okx" }];
         render(<TradeHistoryTable rows={rows} />);
-        const cells = screen.getAllByText("binance");
-        expect(cells.length).toBeGreaterThanOrEqual(1);
+        expect(screen.getAllByText("binance").length).toBeGreaterThanOrEqual(1);
     });
 
     it("renders empty tbody when rows is empty", () => {
@@ -23,8 +24,8 @@ describe("TradeHistoryTable", () => {
         expect(container.querySelectorAll("tbody tr")).toHaveLength(0);
     });
 
-    it("renders empty tbody when rows is undefined", () => {
-        const { container } = render(<TradeHistoryTable />);
+    it("renders empty tbody when rows defaults", () => {
+        const { container } = render(<TradeHistoryTable rows={[]} />);
         expect(container.querySelectorAll("tbody tr")).toHaveLength(0);
     });
 

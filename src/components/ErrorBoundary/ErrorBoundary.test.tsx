@@ -1,29 +1,26 @@
 import React from "react";
+import { vi, describe, it, expect, beforeEach, afterEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import ErrorBoundary from "./ErrorBoundary";
 
-// Component that throws on render when shouldThrow is true
-const ThrowingComponent = ({ shouldThrow }) => {
+interface ThrowingProps { shouldThrow: boolean; }
+
+const ThrowingComponent: React.FC<ThrowingProps> = ({ shouldThrow }) => {
     if (shouldThrow) throw new Error("Test render error");
     return <div>Normal content</div>;
 };
 
-// Suppress React's error boundary console.error output in tests
 beforeEach(() => {
-    jest.spyOn(console, "error").mockImplementation(() => {});
+    vi.spyOn(console, "error").mockImplementation(() => {});
 });
 
 afterEach(() => {
-    console.error.mockRestore();
+    vi.mocked(console.error).mockRestore();
 });
 
 describe("ErrorBoundary", () => {
     it("renders children when no error occurs", () => {
-        render(
-            <ErrorBoundary>
-                <div>Safe content</div>
-            </ErrorBoundary>
-        );
+        render(<ErrorBoundary><div>Safe content</div></ErrorBoundary>);
         expect(screen.getByText("Safe content")).toBeInTheDocument();
     });
 
@@ -56,7 +53,6 @@ describe("ErrorBoundary", () => {
 
         fireEvent.click(screen.getByRole("button", { name: /try again/i }));
 
-        // Re-render with non-throwing component after reset
         rerender(
             <ErrorBoundary>
                 <ThrowingComponent shouldThrow={false} />

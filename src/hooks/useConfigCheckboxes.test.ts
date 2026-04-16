@@ -1,23 +1,25 @@
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { renderHook, act, waitFor } from "@testing-library/react";
 import useConfigCheckboxes from "./useConfigCheckboxes";
 import { mockParameters } from "../mocks/fixtures";
+import type { ParametersConfig } from "../utils/api";
 
-const mockFetchFn = jest.fn();
-const mockDefaultFn = jest.fn();
-const mockUpdateFn = jest.fn();
+const mockFetchFn = vi.fn<[string], Promise<ParametersConfig>>();
+const mockDefaultFn = vi.fn<[], Promise<ParametersConfig>>();
+const mockUpdateFn = vi.fn<[string, ParametersConfig], Promise<{ message: string }>>();
 
 const defaultConfig = {
     storageKey: "testState",
-    defaultState: { exchanges: {}, symbols: {} },
+    defaultState: { exchanges: {}, symbols: {} } as ParametersConfig,
     fetchFn: mockFetchFn,
     defaultFn: mockDefaultFn,
     updateFn: mockUpdateFn,
-    stateKeys: ["exchanges", "symbols"],
+    stateKeys: ["exchanges", "symbols"] as (keyof ParametersConfig)[],
     clientId: "client_123",
 };
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     localStorage.clear();
 });
 
@@ -61,8 +63,6 @@ describe("useConfigCheckboxes — data loading", () => {
         mockFetchFn.mockResolvedValueOnce(mockParameters);
 
         const { result } = renderHook(() => useConfigCheckboxes(defaultConfig));
-
-        // Synchronous initial state from localStorage
         expect(result.current.config.exchanges).toEqual(mockParameters.exchanges);
     });
 });
@@ -76,13 +76,13 @@ describe("useConfigCheckboxes — checkbox interaction", () => {
 
         act(() => {
             result.current.handleCheckboxChange(
-                { target: { name: "Okx", checked: true } },
+                { target: { name: "Okx", checked: true } } as React.ChangeEvent<HTMLInputElement>,
                 "exchanges"
             );
         });
 
-        expect(result.current.config.exchanges.Okx).toBe(true);
-        const stored = JSON.parse(localStorage.getItem("testState"));
+        expect((result.current.config as ParametersConfig).exchanges.Okx).toBe(true);
+        const stored = JSON.parse(localStorage.getItem("testState") ?? "{}") as ParametersConfig;
         expect(stored.exchanges.Okx).toBe(true);
     });
 });

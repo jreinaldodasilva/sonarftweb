@@ -1,19 +1,19 @@
-// src/utils/helpers.test.js
+import { vi, describe, it, expect, beforeEach } from "vitest";
 import { fetchAllOrders, fetchAllTrades } from "./helpers";
 import { getOrders, getTrades } from "./api";
 import { mockOrder, mockTrade } from "../mocks/fixtures";
 
-jest.mock("./api");
+vi.mock("./api");
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
 });
 
 // ### fetchAllOrders ###
 
 describe("fetchAllOrders", () => {
     it("aggregates orders from all bot IDs", async () => {
-        getOrders
+        vi.mocked(getOrders)
             .mockResolvedValueOnce([mockOrder])
             .mockResolvedValueOnce([{ ...mockOrder, buy_exchange: "okx" }]);
 
@@ -25,20 +25,18 @@ describe("fetchAllOrders", () => {
     });
 
     it("fetches all bots in parallel (Promise.all)", async () => {
-        // All calls should be initiated before any resolves
-        const callOrder = [];
-        getOrders.mockImplementation((id) => {
+        const callOrder: string[] = [];
+        vi.mocked(getOrders).mockImplementation((id: string) => {
             callOrder.push(id);
             return Promise.resolve([mockOrder]);
         });
         await fetchAllOrders(["bot_001", "bot_002", "bot_003"]);
-        // All 3 calls initiated — order may vary but all called
         expect(callOrder).toHaveLength(3);
         expect(getOrders).toHaveBeenCalledTimes(3);
     });
 
     it("skips null responses (failed fetches)", async () => {
-        getOrders
+        vi.mocked(getOrders)
             .mockResolvedValueOnce([mockOrder])
             .mockResolvedValueOnce(null);
 
@@ -53,7 +51,7 @@ describe("fetchAllOrders", () => {
     });
 
     it("returns empty array when all fetches return null", async () => {
-        getOrders.mockResolvedValue(null);
+        vi.mocked(getOrders).mockResolvedValue(null);
         const result = await fetchAllOrders(["bot_001", "bot_002"]);
         expect(result).toEqual([]);
     });
@@ -63,7 +61,7 @@ describe("fetchAllOrders", () => {
 
 describe("fetchAllTrades", () => {
     it("aggregates trades from all bot IDs", async () => {
-        getTrades
+        vi.mocked(getTrades)
             .mockResolvedValueOnce([mockTrade])
             .mockResolvedValueOnce([{ ...mockTrade, buy_exchange: "okx" }]);
 
@@ -73,13 +71,13 @@ describe("fetchAllTrades", () => {
     });
 
     it("fetches all bots in parallel (Promise.all)", async () => {
-        getTrades.mockResolvedValue([mockTrade]);
+        vi.mocked(getTrades).mockResolvedValue([mockTrade]);
         await fetchAllTrades(["bot_001", "bot_002", "bot_003"]);
         expect(getTrades).toHaveBeenCalledTimes(3);
     });
 
     it("skips null responses", async () => {
-        getTrades
+        vi.mocked(getTrades)
             .mockResolvedValueOnce(null)
             .mockResolvedValueOnce([mockTrade]);
 
