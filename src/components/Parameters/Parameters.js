@@ -9,6 +9,19 @@ const SAVE_MESSAGES = { saving: "Saving...", saved: "✓ Saved", error: "✗ Err
 const DEFAULT_STATE = { exchanges: {}, symbols: {} };
 const STATE_KEYS = ["exchanges", "symbols"];
 
+// Tooltip descriptions shown on hover for each parameter option.
+const TOOLTIPS = {
+    exchanges: {
+        Binance:  "Binance — world's largest crypto exchange by volume",
+        Okx:      "OKX — major exchange with deep liquidity on most pairs",
+        Kraken:   "Kraken — established exchange known for security and EUR pairs",
+    },
+    symbols: {
+        "BTC/USDT": "Bitcoin / Tether — highest liquidity trading pair",
+        "ETH/USDT": "Ethereum / Tether — second largest crypto by market cap",
+    },
+};
+
 const Parameters = ({ clientId }) => {
     const { config, saveStatus, handleCheckboxChange, handleSave } = useConfigCheckboxes({
         storageKey: "parametersState",
@@ -23,9 +36,10 @@ const Parameters = ({ clientId }) => {
     const renderCheckboxes = (category) => {
         const options = config[category];
         if (!options) return <div>Error: Invalid category</div>;
+        const categoryTooltips = TOOLTIPS[category] ?? {};
         return Object.keys(options).map((item) => (
             <li key={item}>
-                <label>
+                <label title={categoryTooltips[item] ?? item}>
                     <input
                         type="checkbox"
                         name={item}

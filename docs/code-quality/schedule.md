@@ -106,4 +106,4 @@
 | L7 | Vite migration from CRA | ⬜ | |
 | L8 | Performance monitoring (`reportWebVitals`) | ✅ | `src/utils/vitals.js` created; dev: logs to console; prod: `sendBeacon` to `REACT_APP_VITALS_URL` (no-op if unset); `index.js` wired; env examples updated |
 | L9 | Idle session timeout | ✅ | `useIdleTimeout` hook (resets on mousemove/keydown/mousedown/touchstart/scroll); wired into `AuthProvider` with `!!user` guard; default 30 min via `REACT_APP_IDLE_TIMEOUT_MS`; 5 test cases |
-| L10 | Tooltips on indicators/parameters | ⬜ | |
+| L10 | Tooltips on indicators/parameters | ✅ | `TOOLTIPS` maps added to both components; `title` attribute on every `<label>`; covers all 5 periods, 6 oscillators, 5 moving averages, 3 exchanges, 2 symbols |
